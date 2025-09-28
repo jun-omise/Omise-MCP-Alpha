@@ -6,144 +6,144 @@
 [![Node.js](https://img.shields.io/badge/Node.js-20+-green.svg)](https://nodejs.org/)
 [![Docker](https://img.shields.io/badge/Docker-supported-blue.svg)](https://www.docker.com/)
 
-**Omise MCP Server** は、[Model Context Protocol (MCP)](https://modelcontextprotocol.io/) を使用してOmise決済APIと統合するための包括的なサーバーです。TypeScriptで実装され、Omise API v2017-11-02に完全対応しています。
+**Omise MCP Server** is a comprehensive server for integrating with Omise payment APIs using [Model Context Protocol (MCP)](https://modelcontextprotocol.io/). Implemented in TypeScript with full support for Omise API v2017-11-02.
 
-## 🚀 主な機能
+## 🚀 Key Features
 
-### 💳 決済処理
-- **チャージ管理**: 支払いの作成、取得、更新、キャプチャ、リバース
-- **トークン化**: セキュアなカード情報のトークン化
-- **ソース管理**: 多様な決済方法のサポート
-- **払い戻し**: 部分・全額払い戻しの処理
+### 💳 Payment Processing
+- **Charge Management**: Create, retrieve, update, capture, and reverse payments
+- **Tokenization**: Secure card information tokenization
+- **Source Management**: Support for various payment methods
+- **Refunds**: Partial and full refund processing
 
-### 👥 顧客管理
-- **顧客情報**: 顧客の作成、取得、更新、削除
-- **カード管理**: 顧客のカード情報管理
-- **メタデータ**: カスタム情報の保存
+### 👥 Customer Management
+- **Customer Information**: Create, retrieve, update, and delete customers
+- **Card Management**: Manage customer card information
+- **Metadata**: Store custom information
 
-### 🔄 送金・受取人
-- **送金処理**: 受取人への送金
-- **受取人管理**: 受取人の作成、検証、管理
-- **銀行口座**: 銀行口座情報の管理
+### 🔄 Transfers & Recipients
+- **Transfer Processing**: Send money to recipients
+- **Recipient Management**: Create, verify, and manage recipients
+- **Bank Accounts**: Manage bank account information
 
-### 📅 スケジュール・定期決済
-- **定期決済**: スケジュールに基づく自動決済
-- **発生管理**: スケジュール実行の管理
-- **柔軟な設定**: 日次、週次、月次スケジュール
+### 📅 Schedules & Recurring Payments
+- **Recurring Payments**: Automatic payments based on schedules
+- **Occurrence Management**: Manage schedule execution
+- **Flexible Configuration**: Daily, weekly, and monthly schedules
 
-### 🔍 監視・分析
-- **イベント管理**: システムイベントの追跡
-- **ディスプート管理**: チャージバックの処理
-- **Webhook**: リアルタイム通知
+### 🔍 Monitoring & Analytics
+- **Event Management**: Track system events
+- **Dispute Management**: Handle chargebacks
+- **Webhooks**: Real-time notifications
 
-### 🔗 リンク・チェーン
-- **支払いリンク**: 共有可能な支払いリンク
-- **チェーン管理**: マルチテナント対応
-- **機能確認**: API機能の確認
+### 🔗 Links & Chains
+- **Payment Links**: Shareable payment links
+- **Chain Management**: Multi-tenant support
+- **Capability Check**: API functionality verification
 
-## 📋 対応API
+## 📋 Supported APIs
 
-| カテゴリ | 機能 | ツール数 | ドキュメント |
-|---------|------|---------|-------------|
-| **決済** | チャージ、トークン、ソース | 8 | [Omise Charges API](https://www.omise.co/charges-api) |
-| **顧客** | 顧客・カード管理 | 7 | [Omise Customers API](https://www.omise.co/customers-api) |
-| **送金** | 送金・受取人管理 | 6 | [Omise Transfers API](https://www.omise.co/transfers-api) |
-| **払い戻し** | 払い戻し処理 | 3 | [Omise Refunds API](https://www.omise.co/refunds-api) |
-| **ディスプート** | チャージバック処理 | 7 | [Omise Disputes API](https://www.omise.co/disputes-api) |
-| **スケジュール** | 定期決済 | 5 | [Omise Schedules API](https://www.omise.co/schedules-api) |
-| **イベント** | イベント管理 | 2 | [Omise Events API](https://www.omise.co/events-api) |
-| **Webhook** | 通知管理 | 5 | [Omise Webhooks API](https://www.omise.co/webhooks-api) |
-| **リンク** | 支払いリンク | 3 | [Omise Links API](https://www.omise.co/links-api) |
-| **チェーン** | マルチテナント | 4 | [Omise Chains API](https://www.omise.co/chains-api) |
-| **機能** | 機能確認 | 1 | [Omise Capabilities API](https://www.omise.co/capabilities-api) |
+| Category | Features | Tool Count | Documentation |
+|---------|----------|------------|---------------|
+| **Payment** | Charges, Tokens, Sources | 8 | [Omise Charges API](https://www.omise.co/charges-api) |
+| **Customer** | Customer & Card Management | 7 | [Omise Customers API](https://www.omise.co/customers-api) |
+| **Transfer** | Transfer & Recipient Management | 6 | [Omise Transfers API](https://www.omise.co/transfers-api) |
+| **Refund** | Refund Processing | 3 | [Omise Refunds API](https://www.omise.co/refunds-api) |
+| **Dispute** | Chargeback Processing | 7 | [Omise Disputes API](https://www.omise.co/disputes-api) |
+| **Schedule** | Recurring Payments | 5 | [Omise Schedules API](https://www.omise.co/schedules-api) |
+| **Event** | Event Management | 2 | [Omise Events API](https://www.omise.co/events-api) |
+| **Webhook** | Notification Management | 5 | [Omise Webhooks API](https://www.omise.co/webhooks-api) |
+| **Link** | Payment Links | 3 | [Omise Links API](https://www.omise.co/links-api) |
+| **Chain** | Multi-tenant | 4 | [Omise Chains API](https://www.omise.co/chains-api) |
+| **Capability** | Feature Verification | 1 | [Omise Capabilities API](https://www.omise.co/capabilities-api) |
 
-**合計: 51のツール** でOmise APIの全機能をカバー
+**Total: 51 tools** covering all Omise API functionality
 
-## 🛠️ 技術スタック
+## 🛠️ Technology Stack
 
-- **ランタイム**: Node.js 20+
-- **言語**: TypeScript 5.2+
-- **フレームワーク**: Model Context Protocol (MCP)
-- **HTTP クライアント**: Axios
-- **ログ**: Winston
-- **テスト**: Jest + MSW
-- **コンテナ**: Docker + Docker Compose
-- **監視**: Prometheus + Grafana
-- **キャッシュ**: Redis
-- **ログ集約**: Loki
+- **Runtime**: Node.js 20+
+- **Language**: TypeScript 5.2+
+- **Framework**: Model Context Protocol (MCP)
+- **HTTP Client**: Axios
+- **Logging**: Winston
+- **Testing**: Jest + MSW
+- **Containerization**: Docker + Docker Compose
+- **Monitoring**: Prometheus + Grafana
+- **Caching**: Redis
+- **Log Aggregation**: Loki
 
-## 🚀 クイックスタート
+## 🚀 Quick Start
 
-### 前提条件
+### Prerequisites
 
 - Node.js 20+ 
-- npm または yarn
-- [Omiseアカウント](https://dashboard.omise.co/) とAPIキー
+- npm or yarn
+- [Omise Account](https://dashboard.omise.co/) and API keys
 
-### 1. インストール
+### 1. Installation
 
 ```bash
-# リポジトリのクローン
+# Clone the repository
 git clone https://github.com/your-org/omise-mcp-server.git
 cd omise-mcp-server
 
-# 依存関係のインストール
+# Install dependencies
 npm install
 ```
 
-### 2. 環境設定
+### 2. Environment Setup
 
 ```bash
-# 環境設定ファイルのコピー
+# Copy environment configuration file
 cp config/development.env .env
 
-# 環境変数の設定
+# Set environment variables
 export OMISE_PUBLIC_KEY=pkey_test_xxxxxxxxxxxxxxxx
 export OMISE_SECRET_KEY=skey_test_xxxxxxxxxxxxxxxx
 export OMISE_ENVIRONMENT=test
 ```
 
-### 3. 開発サーバーの起動
+### 3. Start Development Server
 
 ```bash
-# 開発モードで起動
+# Start in development mode
 npm run dev
 
-# または本番モードで起動
+# Or start in production mode
 npm run build
 npm start
 ```
 
-### 4. 動作確認
+### 4. Verify Installation
 
 ```bash
-# ヘルスチェック
+# Health check
 curl http://localhost:3000/health
 
-# 利用可能なツールの確認
+# Check available tools
 curl http://localhost:3000/tools
 ```
 
-## 📖 使用方法
+## 📖 Usage
 
-### 基本的な決済処理
+### Basic Payment Processing
 
 ```typescript
-// チャージの作成
+// Create a charge
 const charge = await mcpClient.callTool('create_charge', {
-  amount: 10000,        // 100.00 THB (最小通貨単位)
+  amount: 10000,        // 100.00 THB (smallest currency unit)
   currency: 'THB',
   description: 'Test payment',
   capture: true
 });
 
-// 顧客の作成
+// Create a customer
 const customer = await mcpClient.callTool('create_customer', {
   email: 'customer@example.com',
   description: 'Test customer'
 });
 
-// カードトークンの作成
+// Create a card token
 const token = await mcpClient.callTool('create_token', {
   card: {
     name: 'John Doe',
@@ -155,10 +155,10 @@ const token = await mcpClient.callTool('create_token', {
 });
 ```
 
-### 定期決済の設定
+### Recurring Payment Setup
 
 ```typescript
-// スケジュールの作成
+// Create a schedule
 const schedule = await mcpClient.callTool('create_schedule', {
   every: 1,
   period: 'month',
@@ -172,10 +172,10 @@ const schedule = await mcpClient.callTool('create_schedule', {
 });
 ```
 
-### 送金処理
+### Transfer Processing
 
 ```typescript
-// 受取人の作成
+// Create a recipient
 const recipient = await mcpClient.callTool('create_recipient', {
   name: 'John Doe',
   email: 'john@example.com',
@@ -187,124 +187,124 @@ const recipient = await mcpClient.callTool('create_recipient', {
   }
 });
 
-// 送金の実行
+// Execute transfer
 const transfer = await mcpClient.callTool('create_transfer', {
   amount: 10000,
   recipient: recipient.id
 });
 ```
 
-## 🔧 設定
+## 🔧 Configuration
 
-### 環境変数
+### Environment Variables
 
-| 変数名 | 説明 | 必須 | デフォルト |
-|--------|------|------|-----------|
-| `OMISE_PUBLIC_KEY` | Omise公開キー | ✓ | - |
-| `OMISE_SECRET_KEY` | Omise秘密キー | ✓ | - |
-| `OMISE_ENVIRONMENT` | 環境 (test/production) | ✓ | - |
-| `PORT` | サーバーポート | - | 3000 |
-| `HOST` | サーバーホスト | - | localhost |
-| `LOG_LEVEL` | ログレベル | - | info |
-| `LOG_FORMAT` | ログフォーマット | - | simple |
-| `RATE_LIMIT_ENABLED` | レート制限の有効化 | - | true |
-| `RATE_LIMIT_MAX_REQUESTS` | 最大リクエスト数 | - | 100 |
-| `RATE_LIMIT_WINDOW_MS` | 時間窓 (ミリ秒) | - | 60000 |
+| Variable | Description | Required | Default |
+|----------|-------------|----------|---------|
+| `OMISE_PUBLIC_KEY` | Omise public key | ✓ | - |
+| `OMISE_SECRET_KEY` | Omise secret key | ✓ | - |
+| `OMISE_ENVIRONMENT` | Environment (test/production) | ✓ | - |
+| `PORT` | Server port | - | 3000 |
+| `HOST` | Server host | - | localhost |
+| `LOG_LEVEL` | Log level | - | info |
+| `LOG_FORMAT` | Log format | - | simple |
+| `RATE_LIMIT_ENABLED` | Enable rate limiting | - | true |
+| `RATE_LIMIT_MAX_REQUESTS` | Maximum requests | - | 100 |
+| `RATE_LIMIT_WINDOW_MS` | Time window (ms) | - | 60000 |
 
-### Omise APIキーの取得
+### Obtaining Omise API Keys
 
-1. [Omise Dashboard](https://dashboard.omise.co/) にアクセス
-2. アカウントを作成またはログイン
-3. **API Keys** セクションからキーを取得
-4. **テスト環境**: `pkey_test_` と `skey_test_` で始まるキー
-5. **本番環境**: `pkey_live_` と `skey_live_` で始まるキー
+1. Access [Omise Dashboard](https://dashboard.omise.co/)
+2. Create an account or log in
+3. Get keys from the **API Keys** section
+4. **Test Environment**: Use keys starting with `pkey_test_` and `skey_test_`
+5. **Production Environment**: Use keys starting with `pkey_live_` and `skey_live_`
 
-> **重要**: 本番環境では必ずライブキーを使用し、テスト環境ではテストキーを使用してください。
+> **Important**: Always use live keys in production and test keys in test environment.
 
-## 🏗️ プロジェクト構造
+## 🏗️ Project Structure
 
 ```
 omise-mcp-server/
-├── src/                          # ソースコード
-│   ├── index.ts                  # メインサーバーファイル
-│   ├── types/                    # 型定義
-│   │   ├── omise.ts             # Omise API型定義
-│   │   ├── mcp.ts               # MCP型定義
-│   │   └── index.ts             # 型定義エクスポート
-│   ├── tools/                    # ツール実装
-│   │   ├── payment-tools.ts     # 決済関連ツール
-│   │   ├── customer-tools.ts    # 顧客関連ツール
-│   │   ├── token-tools.ts       # トークン関連ツール
-│   │   ├── source-tools.ts      # ソース関連ツール
-│   │   ├── transfer-tools.ts    # 送金関連ツール
-│   │   ├── recipient-tools.ts   # 受取人関連ツール
-│   │   ├── refund-tools.ts      # 払い戻し関連ツール
-│   │   ├── dispute-tools.ts     # ディスプート関連ツール
-│   │   ├── schedule-tools.ts    # スケジュール関連ツール
-│   │   ├── event-tools.ts       # イベント関連ツール
-│   │   ├── webhook-tools.ts     # Webhook関連ツール
-│   │   ├── link-tools.ts        # リンク関連ツール
-│   │   ├── chain-tools.ts       # チェーン関連ツール
-│   │   ├── capability-tools.ts  # 機能確認ツール
-│   │   └── index.ts             # ツールエクスポート
-│   └── utils/                    # ユーティリティ
-│       ├── config.ts            # 設定管理
-│       ├── logger.ts            # ログ機能
-│       ├── omise-client.ts      # Omise APIクライアント
-│       ├── health-check.ts      # ヘルスチェック
-│       └── index.ts             # ユーティリティエクスポート
-├── tests/                        # テスト
-│   ├── unit/                     # 単体テスト
-│   ├── integration/              # 統合テスト
-│   ├── auth/                     # 認証テスト
-│   ├── error/                    # エラーハンドリングテスト
-│   ├── rate-limit/               # レート制限テスト
-│   ├── mocks/                    # モック
-│   └── factories/                # テストファクトリ
-├── config/                       # 設定ファイル
-│   ├── development.env          # 開発環境設定
-│   ├── staging.env              # ステージング環境設定
-│   └── production.env            # 本番環境設定
-├── monitoring/                   # 監視設定
-│   ├── prometheus.yml            # Prometheus設定
-│   ├── loki-config.yml          # Loki設定
-│   └── grafana/                  # Grafana設定
-├── nginx/                        # Nginx設定
-├── docker-compose.yml            # Docker Compose設定
-├── Dockerfile                    # Docker設定
-├── package.json                  # 依存関係
-├── tsconfig.json                 # TypeScript設定
-└── README.md                     # このファイル
+├── src/                          # Source code
+│   ├── index.ts                  # Main server file
+│   ├── types/                    # Type definitions
+│   │   ├── omise.ts             # Omise API type definitions
+│   │   ├── mcp.ts               # MCP type definitions
+│   │   └── index.ts             # Type definition exports
+│   ├── tools/                    # Tool implementations
+│   │   ├── payment-tools.ts     # Payment-related tools
+│   │   ├── customer-tools.ts    # Customer-related tools
+│   │   ├── token-tools.ts       # Token-related tools
+│   │   ├── source-tools.ts      # Source-related tools
+│   │   ├── transfer-tools.ts    # Transfer-related tools
+│   │   ├── recipient-tools.ts  # Recipient-related tools
+│   │   ├── refund-tools.ts      # Refund-related tools
+│   │   ├── dispute-tools.ts     # Dispute-related tools
+│   │   ├── schedule-tools.ts    # Schedule-related tools
+│   │   ├── event-tools.ts       # Event-related tools
+│   │   ├── webhook-tools.ts     # Webhook-related tools
+│   │   ├── link-tools.ts        # Link-related tools
+│   │   ├── chain-tools.ts       # Chain-related tools
+│   │   ├── capability-tools.ts  # Capability verification tools
+│   │   └── index.ts             # Tool exports
+│   └── utils/                    # Utilities
+│       ├── config.ts            # Configuration management
+│       ├── logger.ts            # Logging functionality
+│       ├── omise-client.ts      # Omise API client
+│       ├── health-check.ts      # Health check
+│       └── index.ts             # Utility exports
+├── tests/                        # Tests
+│   ├── unit/                     # Unit tests
+│   ├── integration/              # Integration tests
+│   ├── auth/                     # Authentication tests
+│   ├── error/                    # Error handling tests
+│   ├── rate-limit/               # Rate limiting tests
+│   ├── mocks/                    # Mocks
+│   └── factories/                # Test factories
+├── config/                       # Configuration files
+│   ├── development.env          # Development environment
+│   ├── staging.env              # Staging environment
+│   └── production.env            # Production environment
+├── monitoring/                   # Monitoring configuration
+│   ├── prometheus.yml            # Prometheus configuration
+│   ├── loki-config.yml          # Loki configuration
+│   └── grafana/                  # Grafana configuration
+├── nginx/                        # Nginx configuration
+├── docker-compose.yml            # Docker Compose configuration
+├── Dockerfile                    # Docker configuration
+├── package.json                  # Dependencies
+├── tsconfig.json                 # TypeScript configuration
+└── README.md                     # This file
 ```
 
-## 🧪 開発
+## 🧪 Development
 
-### 開発環境のセットアップ
+### Development Environment Setup
 
 ```bash
-# 開発依存関係のインストール
+# Install development dependencies
 npm install
 
-# 開発サーバーの起動
+# Start development server
 npm run dev
 
-# ウォッチモード
+# Watch mode
 npm run watch
 ```
 
-### テスト
+### Testing
 
 ```bash
-# 全テストの実行
+# Run all tests
 npm test
 
-# ウォッチモード
+# Watch mode
 npm run test:watch
 
-# カバレッジ付きテスト
+# Coverage report
 npm run test:coverage
 
-# 特定のテストカテゴリ
+# Specific test categories
 npm run test:unit
 npm run test:integration
 npm run test:auth
@@ -312,224 +312,224 @@ npm run test:error
 npm run test:rate-limit
 ```
 
-### リンティング
+### Linting
 
 ```bash
-# リントの実行
+# Run linting
 npm run lint
 
-# 自動修正
+# Auto-fix
 npm run lint:fix
 ```
 
-### ビルド
+### Build
 
 ```bash
-# TypeScriptのコンパイル
+# Compile TypeScript
 npm run build
 
-# 本番用ビルド
+# Production build
 npm run build:production
 ```
 
-## 🐳 Docker デプロイメント
+## 🐳 Docker Deployment
 
-### 開発環境
+### Development Environment
 
 ```bash
-# 開発環境での起動
+# Start development environment
 docker-compose --env-file config/development.env up -d
 
-# ログの確認
+# Check logs
 docker-compose logs -f omise-mcp-server
 ```
 
-### 本番環境
+### Production Environment
 
 ```bash
-# 本番環境での起動
+# Start production environment
 docker-compose --env-file config/production.env up -d
 
-# ヘルスチェック
+# Health check
 curl http://localhost:3000/health
 curl http://localhost:3000/ready
 curl http://localhost:3000/live
 ```
 
-### 自動デプロイメント
+### Automated Deployment
 
 ```bash
-# デプロイメントスクリプトの実行
+# Run deployment script
 ./deploy.sh latest production
 ```
 
-## 📊 監視・ログ
+## 📊 Monitoring & Logs
 
-### Prometheus メトリクス
+### Prometheus Metrics
 
 - **URL**: http://localhost:9090
-- **メトリクス**: CPU、メモリ、リクエスト数、レスポンス時間
-- **アラート**: 高負荷、エラー率の監視
+- **Metrics**: CPU, memory, request count, response time
+- **Alerts**: High load, error rate monitoring
 
-### Grafana ダッシュボード
+### Grafana Dashboard
 
 - **URL**: http://localhost:3001
-- **ログイン**: admin / admin (デフォルト)
-- **ダッシュボード**: システム監視、アプリケーション監視
+- **Login**: admin / admin (default)
+- **Dashboards**: System monitoring, application monitoring
 
-### ログ管理
+### Log Management
 
 ```bash
-# アプリケーションログ
+# Application logs
 docker-compose logs -f omise-mcp-server
 
-# Nginxログ
+# Nginx logs
 docker-compose logs -f nginx
 
-# 全サービスのログ
+# All service logs
 docker-compose logs -f
 ```
 
-## 🔒 セキュリティ
+## 🔒 Security
 
-### セキュリティ機能
+### Security Features
 
-- **非rootユーザー**: コンテナ内での非rootユーザー実行
-- **セキュリティヘッダー**: 適切なHTTPヘッダーの設定
-- **レート制限**: API呼び出しの制限
-- **機密情報マスキング**: ログでの機密情報の隠蔽
-- **環境分離**: テスト・本番環境の完全分離
+- **Non-root user**: Run containers as non-root user
+- **Security headers**: Proper HTTP header configuration
+- **Rate limiting**: API call restrictions
+- **Sensitive data masking**: Hide sensitive information in logs
+- **Environment isolation**: Complete separation of test and production environments
 
-### SSL/TLS設定
+### SSL/TLS Configuration
 
 ```bash
-# SSL証明書の配置
+# Place SSL certificates
 mkdir -p nginx/ssl
 cp your-cert.pem nginx/ssl/cert.pem
 cp your-key.pem nginx/ssl/key.pem
 ```
 
-### セキュリティスキャン
+### Security Scanning
 
 ```bash
-# コンテナのセキュリティスキャン
+# Container security scan
 docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
   aquasec/trivy image omise-mcp-server:latest
 ```
 
-## 🚨 トラブルシューティング
+## 🚨 Troubleshooting
 
-### よくある問題
+### Common Issues
 
-#### 1. サービスが起動しない
+#### 1. Service Won't Start
 
 ```bash
-# ログを確認
+# Check logs
 docker-compose logs omise-mcp-server
 
-# 環境変数を確認
+# Check environment variables
 docker-compose config
 ```
 
-#### 2. ヘルスチェックが失敗する
+#### 2. Health Check Fails
 
 ```bash
-# ヘルスチェックエンドポイントを直接確認
+# Check health check endpoint directly
 curl -v http://localhost:3000/health
 
-# サービス間の接続を確認
+# Check service connectivity
 docker-compose exec omise-mcp-server ping redis
 ```
 
-#### 3. メモリ不足
+#### 3. Memory Issues
 
 ```bash
-# メモリ使用量を確認
+# Check memory usage
 docker stats
 
-# 不要なコンテナを削除
+# Remove unnecessary containers
 docker system prune -a
 ```
 
-### ログ分析
+### Log Analysis
 
 ```bash
-# エラーログの確認
+# Check error logs
 docker-compose logs omise-mcp-server | grep ERROR
 
-# アクセスログの分析
+# Analyze access logs
 docker-compose logs nginx | grep "GET /"
 ```
 
-## 📚 API リファレンス
+## 📚 API Reference
 
-### 決済関連ツール
+### Payment Tools
 
 #### create_charge
-新しいチャージを作成します。
+Create a new charge.
 
-**パラメータ:**
-- `amount` (必須): 金額（最小通貨単位）
-- `currency` (必須): 通貨コード（THB, USD, JPY等）
-- `description` (オプション): チャージの説明
-- `customer` (オプション): 顧客ID
-- `card` (オプション): カードID
-- `source` (オプション): ソースID
-- `capture` (オプション): 即座にキャプチャするか（デフォルト: true）
-- `return_uri` (オプション): リダイレクトURI
-- `metadata` (オプション): メタデータ
+**Parameters:**
+- `amount` (required): Amount in smallest currency unit
+- `currency` (required): Currency code (THB, USD, JPY, etc.)
+- `description` (optional): Charge description
+- `customer` (optional): Customer ID
+- `card` (optional): Card ID
+- `source` (optional): Source ID
+- `capture` (optional): Capture immediately (default: true)
+- `return_uri` (optional): Redirect URI
+- `metadata` (optional): Metadata
 
 #### retrieve_charge
-チャージ情報を取得します。
+Retrieve charge information.
 
-**パラメータ:**
-- `charge_id` (必須): 取得するチャージID
+**Parameters:**
+- `charge_id` (required): Charge ID to retrieve
 
 #### list_charges
-チャージ一覧を取得します。
+List charges.
 
-**パラメータ:**
-- `limit` (オプション): 取得件数（デフォルト: 20）
-- `offset` (オプション): オフセット（デフォルト: 0）
-- `order` (オプション): 並び順（chronological/reverse_chronological）
-- `status` (オプション): ステータスフィルタ
-- `customer` (オプション): 顧客IDフィルタ
+**Parameters:**
+- `limit` (optional): Number of items to retrieve (default: 20)
+- `offset` (optional): Offset (default: 0)
+- `order` (optional): Sort order (chronological/reverse_chronological)
+- `status` (optional): Status filter
+- `customer` (optional): Customer ID filter
 
-### 顧客関連ツール
+### Customer Tools
 
 #### create_customer
-新しい顧客を作成します。
+Create a new customer.
 
-**パラメータ:**
-- `email` (オプション): 顧客のメールアドレス
-- `description` (オプション): 顧客の説明
-- `card` (オプション): カードID
-- `metadata` (オプション): メタデータ
+**Parameters:**
+- `email` (optional): Customer email address
+- `description` (optional): Customer description
+- `card` (optional): Card ID
+- `metadata` (optional): Metadata
 
 #### retrieve_customer
-顧客情報を取得します。
+Retrieve customer information.
 
-**パラメータ:**
-- `customer_id` (必須): 取得する顧客ID
+**Parameters:**
+- `customer_id` (required): Customer ID to retrieve
 
-### トークン関連ツール
+### Token Tools
 
 #### create_token
-セキュアな支払い処理のためのカードトークンを作成します。
+Create a secure card token for payment processing.
 
-**パラメータ:**
-- `card` (必須): カード情報
-  - `name` (必須): カード名義
-  - `number` (必須): カード番号
-  - `expiration_month` (必須): 有効期限月（1-12）
-  - `expiration_year` (必須): 有効期限年（4桁）
-  - `city` (オプション): 請求先住所の都市
-  - `postal_code` (オプション): 請求先住所の郵便番号
-  - `security_code` (オプション): セキュリティコード（CVV/CVC）
+**Parameters:**
+- `card` (required): Card information
+  - `name` (required): Cardholder name
+  - `number` (required): Card number
+  - `expiration_month` (required): Expiration month (1-12)
+  - `expiration_year` (required): Expiration year (4 digits)
+  - `city` (optional): Billing address city
+  - `postal_code` (optional): Billing address postal code
+  - `security_code` (optional): Security code (CVV/CVC)
 
-## 🔗 外部リンク
+## 🔗 External Links
 
-### Omise公式ドキュメント
+### Omise Official Documentation
 
 - [Omise API Documentation](https://www.omise.co/api-documentation)
 - [Omise Charges API](https://www.omise.co/charges-api)
@@ -544,7 +544,7 @@ docker-compose logs nginx | grep "GET /"
 - [Omise Chains API](https://www.omise.co/chains-api)
 - [Omise Capabilities API](https://www.omise.co/capabilities-api)
 
-### 技術ドキュメント
+### Technical Documentation
 
 - [Model Context Protocol (MCP)](https://modelcontextprotocol.io/)
 - [Docker Documentation](https://docs.docker.com/)
@@ -554,54 +554,54 @@ docker-compose logs nginx | grep "GET /"
 - [Redis Documentation](https://redis.io/docs/)
 - [Loki Documentation](https://grafana.com/docs/loki/)
 
-### サポート
+### Support
 
-- **GitHub Issues**: [バグレポートと機能要求](https://github.com/your-org/omise-mcp-server/issues)
-- **Omise Support**: [Omise公式サポート](https://www.omise.co/support)
-- **Community**: [開発者コミュニティ](https://github.com/your-org/omise-mcp-server/discussions)
+- **GitHub Issues**: [Bug reports and feature requests](https://github.com/your-org/omise-mcp-server/issues)
+- **Omise Support**: [Omise official support](https://www.omise.co/support)
+- **Community**: [Developer community](https://github.com/your-org/omise-mcp-server/discussions)
 
-## 📄 ライセンス
+## 📄 License
 
-このプロジェクトは [MIT License](LICENSE) の下で公開されています。
+This project is licensed under the [MIT License](LICENSE).
 
-## 🤝 貢献
+## 🤝 Contributing
 
-プロジェクトへの貢献を歓迎します！以下の手順に従ってください：
+Contributions to the project are welcome! Please follow these steps:
 
-1. このリポジトリをフォーク
-2. フィーチャーブランチを作成 (`git checkout -b feature/amazing-feature`)
-3. 変更をコミット (`git commit -m 'Add some amazing feature'`)
-4. ブランチにプッシュ (`git push origin feature/amazing-feature`)
-5. プルリクエストを作成
+1. Fork this repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Create a Pull Request
 
-### 開発ガイドライン
+### Development Guidelines
 
-- コードはTypeScriptで記述
-- テストカバレッジを維持
-- ESLintルールに従う
-- コミットメッセージは明確に記述
+- Write code in TypeScript
+- Maintain test coverage
+- Follow ESLint rules
+- Write clear commit messages
 
-## 📈 ロードマップ
+## 📈 Roadmap
 
-### v1.1.0 (予定)
-- [ ] 追加の決済方法サポート
-- [ ] 高度なレポート機能
-- [ ] パフォーマンス最適化
+### v1.1.0 (Planned)
+- [ ] Additional payment method support
+- [ ] Advanced reporting features
+- [ ] Performance optimizations
 
-### v1.2.0 (予定)
-- [ ] マルチテナント対応の強化
-- [ ] 高度な監視機能
-- [ ] セキュリティ機能の強化
+### v1.2.0 (Planned)
+- [ ] Enhanced multi-tenant support
+- [ ] Advanced monitoring features
+- [ ] Enhanced security features
 
-## 📊 統計
+## 📊 Statistics
 
-- **総ツール数**: 51
-- **対応API**: 11カテゴリ
-- **テストカバレッジ**: 95%+
+- **Total Tools**: 51
+- **Supported APIs**: 11 categories
+- **Test Coverage**: 95%+
 - **TypeScript**: 100%
-- **Docker対応**: ✅
-- **監視対応**: ✅
+- **Docker Support**: ✅
+- **Monitoring Support**: ✅
 
 ---
 
-**Omise MCP Server** で、安全で効率的な決済処理を実現しましょう！ 🚀
+**Omise MCP Server** - Achieve secure and efficient payment processing! 🚀
