@@ -32,7 +32,6 @@
     "ts-jest": "^29.1.1",
     "supertest": "^6.3.3",
     "msw": "^2.0.8",
-    "@mswjs/data": "^2.0.0",
     "@faker-js/faker": "^8.4.0"
   },
   "jest": {
