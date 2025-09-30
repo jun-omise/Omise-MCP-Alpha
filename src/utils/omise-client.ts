@@ -14,9 +14,9 @@ import {
   OmiseResponse,
   OmiseError,
   OmiseListResponse
-} from '../types/omise.js';
-import { Logger } from './logger.js';
-import { RequestContext, ResponseContext, RateLimitInfo } from '../types/mcp.js';
+} from '../types/omise';
+import { Logger } from './logger';
+import { RequestContext, ResponseContext, RateLimitInfo } from '../types/mcp';
 
 export class OmiseClient {
   private client: AxiosInstance;

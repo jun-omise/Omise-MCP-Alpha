@@ -3,7 +3,7 @@
  */
 
 import { beforeAll, afterAll, afterEach } from '@jest/globals';
-import { server } from './mocks/server.js';
+import { server } from './mocks/server';
 
 // MSW サーバーのセットアップ
 beforeAll(() => server.listen());

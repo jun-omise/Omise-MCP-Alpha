@@ -3,9 +3,9 @@
  */
 
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
-import { PaymentTools } from '../../src/tools/payment-tools.js';
-import { OmiseClient } from '../../src/utils/omise-client.js';
-import { Logger } from '../../src/utils/logger.js';
+import { PaymentTools } from '../../src/tools/payment-tools';
+import { OmiseClient } from '../../src/utils/omise-client';
+import { Logger } from '../../src/utils/logger';
 
 // モックの設定
 jest.mock('../../src/utils/omise-client.js');

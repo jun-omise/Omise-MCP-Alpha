@@ -3,11 +3,11 @@
  */
 
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from '@jest/globals';
-import { PaymentTools } from '../../src/tools/payment-tools.js';
-import { CustomerTools } from '../../src/tools/customer-tools.js';
-import { OmiseClient } from '../../src/utils/omise-client.js';
-import { Logger } from '../../src/utils/logger.js';
-import { createMockCharge, createMockCustomer } from '../factories/index.js';
+import { PaymentTools } from '../../src/tools/payment-tools';
+import { CustomerTools } from '../../src/tools/customer-tools';
+import { OmiseClient } from '../../src/utils/omise-client';
+import { Logger } from '../../src/utils/logger';
+import { createMockCharge, createMockCustomer } from '../factories/index';
 
 describe('API Integration Tests', () => {
   let paymentTools: PaymentTools;

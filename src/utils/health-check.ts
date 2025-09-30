@@ -3,9 +3,9 @@
  */
 
 import { Request, Response } from 'express';
-import { OmiseClient } from './omise-client.js';
-import { Logger } from './logger.js';
-import { ServerConfig } from '../types/mcp.js';
+import { OmiseClient } from './omise-client';
+import { Logger } from './logger';
+import { ServerConfig } from '../types/mcp';
 
 export interface HealthCheckResult {
   status: 'healthy' | 'unhealthy' | 'degraded';

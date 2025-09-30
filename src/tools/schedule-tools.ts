@@ -12,16 +12,16 @@ interface Tool {
     required?: string[];
   };
 }
-import { OmiseClient } from '../utils/omise-client.js';
-import { Logger } from '../utils/logger.js';
-import { ToolResult } from '../types/mcp.js';
+import { OmiseClient } from '../utils/omise-client';
+import { Logger } from '../utils/logger';
+import { ToolResult } from '../types/mcp';
 import { 
   CreateScheduleRequest, 
   OmiseSchedule,
   OmiseScheduleOccurrence,
   OmiseListResponse,
   OmiseMetadata 
-} from '../types/omise.js';
+} from '../types/omise';
 
 export class ScheduleTools {
   private omiseClient: OmiseClient;

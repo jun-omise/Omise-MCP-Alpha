@@ -12,16 +12,16 @@ interface Tool {
     required?: string[];
   };
 }
-import { OmiseClient } from '../utils/omise-client.js';
-import { Logger } from '../utils/logger.js';
-import { ToolResult } from '../types/mcp.js';
+import { OmiseClient } from '../utils/omise-client';
+import { Logger } from '../utils/logger';
+import { ToolResult } from '../types/mcp';
 import { 
   CreateWebhookEndpointRequest,
   UpdateWebhookEndpointRequest,
   OmiseWebhookEndpoint,
   OmiseListResponse,
   OmiseMetadata 
-} from '../types/omise.js';
+} from '../types/omise';
 import crypto from 'crypto';
 
 export class WebhookTools {

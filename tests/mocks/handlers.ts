@@ -18,7 +18,7 @@ import {
   createMockLink, 
   createMockChain, 
   createMockCapability 
-} from '../factories/index.js';
+} from '../factories/index';
 
 export const handlers = [
   // ============================================================================

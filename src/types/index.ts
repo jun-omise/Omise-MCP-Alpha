@@ -1,6 +1,6 @@
 /**
- * Type Definition Exports
+ * 型定義のエクスポート
  */
 
-export * from './omise.js';
-export * from './mcp.js';
+export * from './omise';
+export * from './mcp';

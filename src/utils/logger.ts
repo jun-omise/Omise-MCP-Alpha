@@ -3,7 +3,7 @@
  */
 
 import winston from 'winston';
-import { ServerConfig } from '../types/mcp.js';
+import { ServerConfig } from '../types/mcp';
 
 export class Logger {
   private logger: winston.Logger;

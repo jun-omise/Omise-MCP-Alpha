@@ -12,13 +12,13 @@ interface Tool {
     required?: string[];
   };
 }
-import { OmiseClient } from '../utils/omise-client.js';
-import { Logger } from '../utils/logger.js';
-import { TokenToolParams, ToolResult } from '../types/mcp.js';
+import { OmiseClient } from '../utils/omise-client';
+import { Logger } from '../utils/logger';
+import { TokenToolParams, ToolResult } from '../types/mcp';
 import { 
   CreateTokenRequest, 
   OmiseToken 
-} from '../types/omise.js';
+} from '../types/omise';
 
 export class TokenTools {
   private omiseClient: OmiseClient;

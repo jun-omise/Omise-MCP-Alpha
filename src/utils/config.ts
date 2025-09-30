@@ -3,7 +3,7 @@
  */
 
 import dotenv from 'dotenv';
-import { ServerConfig } from '../types/mcp.js';
+import { ServerConfig } from '../types/mcp';
 
 // Load environment variables
 dotenv.config();

@@ -531,6 +531,84 @@ export interface OmiseWebhook {
   updated_at: string;
 }
 
+export interface OmiseWebhookEndpoint extends OmiseBaseObject {
+  object: 'webhook_endpoint';
+  url: string;
+  disabled: boolean;
+  events: string[];
+}
+
+export interface CreateWebhookEndpointRequest {
+  url: string;
+  events: string[];
+  disabled?: boolean;
+  metadata?: OmiseMetadata;
+}
+
+export interface UpdateWebhookEndpointRequest {
+  url?: string;
+  events?: string[];
+  disabled?: boolean;
+  metadata?: OmiseMetadata;
+}
+
+export interface CreateDisputeRequest {
+  charge: string;
+  amount?: number;
+  reason?: string;
+  metadata?: OmiseMetadata;
+}
+
+export interface UpdateDisputeRequest {
+  message?: string;
+  metadata?: OmiseMetadata;
+}
+
+export interface CreateEventRequest {
+  type: string;
+  data: any;
+  metadata?: OmiseMetadata;
+}
+
+export interface CreateChainRequest {
+  name: string;
+  description?: string;
+  steps: OmiseChainStep[];
+  metadata?: OmiseMetadata;
+}
+
+export interface CreateCapabilityRequest {
+  name: string;
+  description?: string;
+  features: string[];
+  metadata?: OmiseMetadata;
+}
+
+export interface OmiseChainRevision extends OmiseBaseObject {
+  object: 'chain_revision';
+  chain: string;
+  step_id: string;
+  status: 'pending' | 'completed' | 'failed';
+  result?: any;
+  error?: string;
+}
+
+export interface OmiseChainStep {
+  id: string;
+  action: string;
+  parameters?: any;
+  condition?: any;
+}
+
+export interface OmiseScheduleOccurrence extends OmiseBaseObject {
+  object: 'schedule_occurrence';
+  schedule: string;
+  processed_at: string;
+  status: 'successful' | 'failed';
+  result?: any;
+  error?: string;
+}
+
 // ============================================================================
 // Capability Type Definitions
 // ============================================================================

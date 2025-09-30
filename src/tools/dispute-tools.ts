@@ -12,15 +12,15 @@ interface Tool {
     required?: string[];
   };
 }
-import { OmiseClient } from '../utils/omise-client.js';
-import { Logger } from '../utils/logger.js';
-import { ToolResult } from '../types/mcp.js';
+import { OmiseClient } from '../utils/omise-client';
+import { Logger } from '../utils/logger';
+import { ToolResult } from '../types/mcp';
 import { 
   OmiseDispute,
   OmiseDisputeDocument,
   OmiseListResponse,
   OmiseMetadata 
-} from '../types/omise.js';
+} from '../types/omise';
 
 export class DisputeTools {
   private omiseClient: OmiseClient;

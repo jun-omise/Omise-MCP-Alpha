@@ -10,24 +10,24 @@ import {
   GetServerInfoRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 
-import { loadConfig, validateOmiseKeys, getServerInfo } from './utils/config.js';
-import { Logger } from './utils/logger.js';
-import { OmiseClient } from './utils/omise-client.js';
-import { PaymentTools } from './tools/payment-tools.js';
-import { CustomerTools } from './tools/customer-tools.js';
-import { TokenTools } from './tools/token-tools.js';
-import { SourceTools } from './tools/source-tools.js';
-import { TransferTools } from './tools/transfer-tools.js';
-import { RecipientTools } from './tools/recipient-tools.js';
-import { RefundTools } from './tools/refund-tools.js';
-import { DisputeTools } from './tools/dispute-tools.js';
-import { ScheduleTools } from './tools/schedule-tools.js';
-import { EventTools } from './tools/event-tools.js';
-import { WebhookTools } from './tools/webhook-tools.js';
-import { LinkTools } from './tools/link-tools.js';
-import { ChainTools } from './tools/chain-tools.js';
-import { CapabilityTools } from './tools/capability-tools.js';
-import { ServerInfo } from './types/mcp.js';
+import { loadConfig, validateOmiseKeys, getServerInfo } from './utils/config';
+import { Logger } from './utils/logger';
+import { OmiseClient } from './utils/omise-client';
+import { PaymentTools } from './tools/payment-tools';
+import { CustomerTools } from './tools/customer-tools';
+import { TokenTools } from './tools/token-tools';
+import { SourceTools } from './tools/source-tools';
+import { TransferTools } from './tools/transfer-tools';
+import { RecipientTools } from './tools/recipient-tools';
+import { RefundTools } from './tools/refund-tools';
+import { DisputeTools } from './tools/dispute-tools';
+import { ScheduleTools } from './tools/schedule-tools';
+import { EventTools } from './tools/event-tools';
+import { WebhookTools } from './tools/webhook-tools';
+import { LinkTools } from './tools/link-tools';
+import { ChainTools } from './tools/chain-tools';
+import { CapabilityTools } from './tools/capability-tools';
+import { ServerInfo } from './types/mcp';
 
 async function main() {
   try {
