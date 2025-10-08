@@ -1,53 +1,114 @@
 # Omise MCP Server Test Suite
 
-This directory contains a comprehensive test suite for the Omise MCP Server.
+Comprehensive test suite for the Omise MCP server with A2A authentication and communication capabilities.
 
-## Test Configuration
+## Test Structure
 
-### Test Framework
-- **Jest**: Main test framework
-- **MSW**: API mock server
-- **Faker**: Test data generation
-- **Supertest**: HTTP integration testing
+```
+tests/
+├── auth/                    # Authentication tests
+│   └── authentication.test.ts
+├── fixtures/                # Test fixtures and mock data
+│   └── auth-fixtures.ts
+├── integration/             # Integration tests
+│   └── a2a-integration.test.ts
+├── mocks/                   # Test mocks and utilities
+│   └── auth-mocks.ts
+├── unit/                    # Unit tests
+│   ├── oauth2-provider.test.ts
+│   ├── mutual-tls.test.ts
+│   ├── a2a-communication.test.ts
+│   └── a2a-auth-service.test.ts
+├── setup.ts                 # Test setup and configuration
+└── README.md               # This file
+```
 
-### Test Types
+## Test Categories
 
-#### 1. Unit Tests (`/unit/`)
-- Individual tool functionality tests
-- Validation function tests
-- Coverage of both normal and error cases
+### 1. Unit Tests
 
-#### 2. Integration Tests (`/integration/`)
-- API integration tests
-- End-to-end flow tests
-- Actual API call tests
+#### OAuth2Provider Tests (`tests/unit/oauth2-provider.test.ts`)
+- **Client Registration**: Test OAuth client registration with various configurations
+- **Authorization URL Generation**: Test authorization URL generation with PKCE
+- **Token Exchange**: Test authorization code to access token exchange
+- **Token Refresh**: Test access token refresh functionality
+- **Token Validation**: Test access token validation and parsing
+- **Token Revocation**: Test token revocation and cleanup
+- **Cleanup Tasks**: Test expired token and code cleanup
 
-#### 3. Error Handling Tests (`/error/`)
-- API error response handling
-- Network error handling
-- Validation error handling
-- Unexpected error handling
+#### MutualTLSProvider Tests (`tests/unit/mutual-tls.test.ts`)
+- **Certificate Issuance**: Test agent certificate issuance
+- **Certificate Validation**: Test certificate validation against trusted CA
+- **TLS Context Creation**: Test TLS context creation for secure connections
+- **Certificate Revocation**: Test certificate revocation
+- **Certificate Status**: Test certificate status checking
+- **Certificate Listing**: Test certificate listing and management
 
-#### 4. Authentication & Authorization Tests (`/auth/`)
-- API key authentication tests
-- Environment-specific key validation
-- Permission-based authorization tests
-- Session management tests
+#### A2ACommunication Tests (`tests/unit/a2a-communication.test.ts`)
+- **Connection Initialization**: Test secure channel establishment
+- **Message Sending**: Test encrypted and unencrypted message sending
+- **Message Receiving**: Test message processing and validation
+- **Message Type Handlers**: Test different message type handlers
+- **Connection Management**: Test connection closing and status
+- **Security Features**: Test encryption, signing, and replay protection
 
-#### 5. Rate Limiting Tests (`/rate-limit/`)
-- Rate limit header processing
-- Automatic retry functionality
-- Exponential backoff
-- Queue management
+#### A2AAuthService Tests (`tests/unit/a2a-auth-service.test.ts`)
+- **Agent Registration**: Test complete agent registration flow
+- **Agent Authentication**: Test authentication with various security levels
+- **Secure Channel Establishment**: Test secure channel setup
+- **Secure Message Sending**: Test secure message transmission
+- **Health Checks**: Test health check functionality
+- **Security Metrics**: Test security metrics collection
 
-## Test Execution
+### 2. Integration Tests
+
+#### A2A Integration Tests (`tests/integration/a2a-integration.test.ts`)
+- **End-to-End Flow**: Complete workflow from registration to payment
+- **Multi-Agent Communication**: Communication between multiple agents
+- **Security Scenarios**: Rate limiting, authentication failures, certificate validation
+- **Performance Tests**: Concurrent operations and scalability
+- **Audit and Monitoring**: Comprehensive audit logging and metrics
+
+### 3. Authentication Tests
+
+#### Authentication Tests (`tests/auth/authentication.test.ts`)
+- **API Key Validation**: Test API key validation and security
+- **Environment Key Validation**: Test environment variable validation
+- **Permission-Based Authorization**: Test scope-based access control
+- **Multi-Tenant Authorization**: Test multi-tenant access control
+- **Session-Based Authentication**: Test session management
+- **OAuth Token Authentication**: Test OAuth token validation
+- **IP-Based Access Control**: Test IP whitelisting/blacklisting
+- **Rate Limit Authentication**: Test rate limiting and throttling
+
+## Test Fixtures and Mocks
+
+### Test Fixtures (`tests/fixtures/auth-fixtures.ts`)
+- **Mock Configurations**: OAuth, mTLS, and communication configurations
+- **Mock Data**: Agent identities, messages, and payloads
+- **Test Data Generators**: Functions to generate test data
+- **Error Responses**: Mock error responses for testing
+
+### Test Mocks (`tests/mocks/auth-mocks.ts`)
+- **Service Mocks**: Mock implementations of all services
+- **Response Mocks**: Mock successful and error responses
+- **Crypto Mocks**: Mock cryptographic functions
+- **File System Mocks**: Mock file system operations
+- **HTTP Mocks**: Mock HTTP requests and responses
+
+## Running Tests
+
+### Prerequisites
+```bash
+npm install
+```
 
 ### Run All Tests
 ```bash
 npm test
 ```
 
-### Run Specific Category Tests
+### Run Specific Test Categories
 ```bash
 # Unit tests only
 npm run test:unit
@@ -55,196 +116,246 @@ npm run test:unit
 # Integration tests only
 npm run test:integration
 
-# Error handling tests only
-npm run test:error
-
 # Authentication tests only
 npm run test:auth
 
-# Rate limiting tests only
-npm run test:rate-limit
+# All tests
+npm run test:all
 ```
 
-### Coverage Report
+### Run Tests with Coverage
 ```bash
 npm run test:coverage
 ```
 
-### Watch Mode
+### Run Tests in Watch Mode
 ```bash
 npm run test:watch
 ```
 
-## Test Data Factories
+### Run Test App
+```bash
+# Start test app
+npm run test:app:dev
 
-The `/factories/` directory contains factory functions for generating mock data for each Omise resource:
-
-- `createMockCharge()` - Charge data
-- `createMockCustomer()` - Customer data
-- `createMockCard()` - Card data
-- `createMockToken()` - Token data
-- `createMockTransfer()` - Transfer data
-- `createMockRecipient()` - Recipient data
-- `createMockRefund()` - Refund data
-- `createMockDispute()` - Dispute data
-- `createMockSchedule()` - Schedule data
-- `createMockEvent()` - Event data
-- `createMockWebhookEndpoint()` - Webhook endpoint data
-- `createMockLink()` - Link data
-- `createMockChain()` - Chain data
-- `createMockCapability()` - Capability data
-
-## Mock Server
-
-The `/mocks/` directory contains API mock server configuration using MSW:
-
-- `server.ts` - Mock server configuration
-- `handlers.ts` - Mock handlers for API endpoints
+# Run test runner
+npm run test:runner:all
+npm run test:runner:performance
+npm run test:runner:load
+npm run test:runner:report
+```
 
 ## Test Configuration
 
-### Jest Configuration
-- TypeScript support
-- Coverage report generation
-- Test timeout setting (30 seconds)
-- Automatic setup file loading
-
 ### Environment Variables
-The following environment variables are automatically set during test execution:
-- `NODE_ENV=test`
-- `OMISE_PUBLIC_KEY=pkey_test_1234567890`
-- `OMISE_SECRET_KEY=skey_test_1234567890`
-- `OMISE_ENVIRONMENT=test`
+The test suite uses the following environment variables:
 
-## テストカバレッジ
-
-テストスイートは以下の領域をカバーしています：
-
-### 機能カバレッジ
-- ✅ 全APIツールの正常系・異常系
-- ✅ バリデーション機能
-- ✅ エラーハンドリング
-- ✅ 認証・認可
-- ✅ レート制限
-- ✅ リトライ機能
-- ✅ ログ機能
-
-### APIカバレッジ
-- ✅ Charge API
-- ✅ Customer API
-- ✅ Token API
-- ✅ Source API
-- ✅ Transfer API
-- ✅ Recipient API
-- ✅ Refund API
-- ✅ Dispute API
-- ✅ Schedule API
-- ✅ Event API
-- ✅ Webhook API
-- ✅ Link API
-- ✅ Chain API
-- ✅ Capability API
-
-## テストベストプラクティス
-
-### テスト構造
-```typescript
-describe('Feature Name', () => {
-  describe('Method Name', () => {
-    it('正常系: 期待される動作', async () => {
-      // Arrange
-      // Act
-      // Assert
-    });
-
-    it('異常系: エラーケース', async () => {
-      // Arrange
-      // Act
-      // Assert
-    });
-  });
-});
+```bash
+NODE_ENV=test
+OMISE_PUBLIC_KEY=test-public-key
+OMISE_SECRET_KEY=test-secret-key
+OMISE_API_URL=https://api.omise.co
+LOG_LEVEL=error
+AUDIT_LOGGING=true
+RATE_LIMIT_PER_MINUTE=1000
+ENCRYPTION_KEY=test-encryption-key-32-characters-long
+SIGNING_KEY=test-signing-key-32-characters-long
+JWT_SECRET=test-jwt-secret-key
+CERT_PATH=./test-certs
+CERTIFICATE_VALIDITY_DAYS=365
+KEY_SIZE=2048
 ```
 
-### モックの使用
-```typescript
-// モックの設定
-jest.mock('../../src/utils/omise-client.js');
+### Jest Configuration
+The Jest configuration is defined in `package.json`:
 
-// テストでの使用
-mockOmiseClient.createCharge.mockResolvedValue(mockCharge);
+```json
+{
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "roots": ["<rootDir>/src", "<rootDir>/tests"],
+    "testMatch": [
+      "**/tests/**/*.test.ts",
+      "**/tests/**/*.spec.ts"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/**/*.d.ts",
+      "!src/index.ts"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": ["text", "lcov", "html"],
+    "setupFilesAfterEnv": ["<rootDir>/tests/setup.ts"],
+    "testTimeout": 30000
+  }
+}
 ```
 
-### アサーション
-```typescript
-// 成功ケース
-expect(result.success).toBe(true);
-expect(result.data).toEqual(expectedData);
+## Test Utilities
 
-// エラーケース
-expect(result.success).toBe(false);
-expect(result.error).toContain('Expected error message');
+### Global Test Utilities
+The test setup provides global utilities accessible in all tests:
+
+```typescript
+// Generate test data
+const agent = global.testUtils.generateTestAgent();
+const payment = global.testUtils.generateTestPayment();
+const customer = global.testUtils.generateTestCustomer();
+
+// Utility functions
+await global.testUtils.wait(1000); // Wait 1 second
+const randomString = global.testUtils.randomString(10);
+
+// Mock utilities
+const mockLogger = global.testUtils.createMockLogger();
+const mockResponse = global.testUtils.createMockAxiosResponse(data);
+const mockError = global.testUtils.createMockAxiosError('Error message');
 ```
 
-## 継続的インテグレーション
+### Test Data Generation
+The test suite includes comprehensive test data generation:
+
+- **Agent Data**: Realistic agent registration information
+- **Payment Data**: Various payment scenarios and amounts
+- **Customer Data**: Customer information and operations
+- **Certificate Data**: Mock certificates and keys
+- **Token Data**: OAuth tokens and JWT tokens
+- **Message Data**: A2A communication messages
+
+## Test Scenarios
+
+### Basic Scenarios
+1. **Agent Registration**: Test agent registration with various configurations
+2. **Authentication Flow**: Test complete OAuth 2.0 authentication flow
+3. **Secure Communication**: Test encrypted A2A message exchange
+4. **Payment Processing**: Test Omise payment operations
+5. **Customer Operations**: Test customer management operations
+
+### Advanced Scenarios
+1. **End-to-End Flow**: Complete workflow from registration to payment
+2. **Multi-Agent Communication**: Communication between multiple agents
+3. **Error Handling**: Test error scenarios and edge cases
+4. **Security Validation**: Test security policies and validations
+5. **Performance Testing**: Benchmark system performance
+6. **Load Testing**: Test under concurrent load conditions
+
+### Security Scenarios
+1. **Rate Limiting**: Test rate limiting and throttling
+2. **Authentication Failures**: Test invalid credentials and tokens
+3. **Certificate Validation**: Test certificate validation failures
+4. **Encryption Failures**: Test encryption/decryption errors
+5. **Replay Attacks**: Test replay attack prevention
+6. **Man-in-the-Middle**: Test mTLS protection
+
+## Performance Testing
+
+### Benchmark Tests
+- **Registration Performance**: Test agent registration speed
+- **Authentication Performance**: Test authentication response times
+- **Message Sending Performance**: Test message transmission speed
+- **Payment Processing Performance**: Test payment processing speed
+- **Concurrent Operations**: Test concurrent operation handling
+
+### Load Tests
+- **Concurrent Users**: Test with multiple concurrent users
+- **Message Throughput**: Test message processing throughput
+- **Connection Limits**: Test connection limit handling
+- **Memory Usage**: Test memory usage under load
+- **CPU Usage**: Test CPU usage under load
+
+## Coverage Reports
+
+The test suite generates comprehensive coverage reports:
+
+- **Line Coverage**: Percentage of code lines executed
+- **Branch Coverage**: Percentage of code branches executed
+- **Function Coverage**: Percentage of functions executed
+- **Statement Coverage**: Percentage of statements executed
+
+Coverage reports are generated in multiple formats:
+- **Text**: Console output
+- **LCOV**: For CI/CD integration
+- **HTML**: Detailed HTML reports
+
+## Continuous Integration
 
 ### GitHub Actions
-テストは以下のトリガーで自動実行されます：
-- プルリクエスト作成時
-- メインブランチへのプッシュ時
-- 手動実行
+The test suite is designed to run in CI/CD environments:
 
-### テスト結果
-- テスト成功率
-- カバレッジレポート
-- パフォーマンスメトリクス
-- セキュリティスキャン結果
+```yaml
+name: Tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: npm run test:coverage
+      - uses: codecov/codecov-action@v1
+```
 
-## トラブルシューティング
+### Test Reports
+Test results are automatically generated and can be integrated with:
+- **Codecov**: Code coverage reporting
+- **SonarQube**: Code quality analysis
+- **GitHub**: Pull request status checks
+- **Slack**: Test result notifications
 
-### よくある問題
+## Troubleshooting
 
-#### 1. テストがタイムアウトする
+### Common Issues
+
+1. **Test Timeouts**: Increase timeout in Jest configuration
+2. **Mock Failures**: Check mock implementations and setup
+3. **Environment Issues**: Verify environment variables
+4. **Coverage Issues**: Check coverage collection patterns
+5. **Memory Issues**: Increase Node.js memory limit
+
+### Debug Mode
+Enable debug logging for tests:
+
 ```bash
-# タイムアウト時間を延長
-jest --testTimeout=60000
-```
-
-#### 2. モックが正しく動作しない
-```typescript
-// モックのリセット
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-```
-
-#### 3. 環境変数が設定されない
-```typescript
-// テストファイルで明示的に設定
-process.env.OMISE_PUBLIC_KEY = 'pkey_test_1234567890';
-```
-
-### デバッグ
-```bash
-# 詳細ログ付きでテスト実行
 DEBUG=* npm test
-
-# 特定のテストのみ実行
-npm test -- --testNamePattern="特定のテスト名"
 ```
 
-## 貢献
+### Verbose Output
+Run tests with verbose output:
 
-新しいテストを追加する際は、以下のガイドラインに従ってください：
+```bash
+npm test -- --verbose
+```
 
-1. テストファイルは適切なディレクトリに配置
-2. テスト名は日本語で記述（機能を明確に表現）
-3. Arrange-Act-Assert パターンを使用
-4. モックは適切に設定・リセット
-5. アサーションは具体的で明確
-6. エラーケースも必ずテスト
-7. カバレッジを向上させる
+## Contributing
 
-## ライセンス
+### Adding New Tests
+1. Create test file in appropriate directory
+2. Follow naming convention: `*.test.ts`
+3. Use existing fixtures and mocks
+4. Add proper test descriptions
+5. Ensure tests are isolated and repeatable
 
-このテストスイートは、メインプロジェクトと同じライセンスの下で提供されています。
+### Test Guidelines
+- **Isolation**: Each test should be independent
+- **Repeatability**: Tests should produce consistent results
+- **Clarity**: Test names should clearly describe what is being tested
+- **Coverage**: Aim for high test coverage
+- **Performance**: Tests should run quickly
+- **Maintainability**: Tests should be easy to maintain
+
+### Code Style
+- Use TypeScript for all tests
+- Follow existing naming conventions
+- Use descriptive test names
+- Group related tests with `describe` blocks
+- Use `beforeEach` and `afterEach` for setup/cleanup
+- Mock external dependencies
+- Test both success and failure scenarios
+
+## License
+
+MIT License - see LICENSE file for details.

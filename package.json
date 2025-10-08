@@ -15,7 +15,16 @@
     "test:integration": "jest --testPathPattern=integration",
     "test:error": "jest --testPathPattern=error",
     "test:auth": "jest --testPathPattern=auth",
-    "test:rate-limit": "jest --testPathPattern=rate-limit"
+    "test:rate-limit": "jest --testPathPattern=rate-limit",
+    "test:all": "jest tests",
+    "test:app": "cd test-app && npm test",
+    "test:app:dev": "cd test-app && npm run dev",
+    "test:app:build": "cd test-app && npm run build",
+    "test:runner": "cd test-app && npx ts-node test-runner.ts",
+    "test:runner:all": "cd test-app && npx ts-node test-runner.ts all",
+    "test:runner:performance": "cd test-app && npx ts-node test-runner.ts performance",
+    "test:runner:load": "cd test-app && npx ts-node test-runner.ts load",
+    "test:runner:report": "cd test-app && npx ts-node test-runner.ts report"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.4.0",
@@ -35,7 +44,10 @@
     "ts-jest": "^29.1.1",
     "supertest": "^6.3.3",
     "msw": "^2.0.8",
-    "@faker-js/faker": "^8.4.0"
+    "@faker-js/faker": "^8.4.0",
+    "nock": "^13.4.0",
+    "sinon": "^17.0.1",
+    "@types/sinon": "^17.0.2"
   },
   "jest": {
     "preset": "ts-jest",
