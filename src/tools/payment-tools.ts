@@ -242,6 +242,13 @@ export class PaymentTools {
     return validCurrencies.includes(currency.toUpperCase());
   }
 
+  private validateChargeId(chargeId: string): boolean {
+    // Omise charge ID format:
+    // Test: chrg_test_xxxxxxxxxxxxxxxx (19 chars after test_)
+    // Production: chrg_xxxxxxxxxxxxxxxx (19 chars after chrg_)
+    return /^chrg_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/.test(chargeId);
+  }
+
   private validateAmount(amount: number, currency: string): boolean {
     if (amount <= 0) return false;
     
@@ -335,6 +342,13 @@ export class PaymentTools {
         };
       }
 
+      if (!this.validateChargeId(params.charge_id)) {
+        return {
+          success: false,
+          error: 'Invalid charge ID format. Must be in format: chrg_xxxxxxxxxxxxxxxx'
+        };
+      }
+
       const charge = await this.omiseClient.getCharge(params.charge_id);
 
       return {
@@ -394,6 +408,13 @@ export class PaymentTools {
         };
       }
 
+      if (!this.validateChargeId(params.charge_id)) {
+        return {
+          success: false,
+          error: 'Invalid charge ID format. Must be in format: chrg_xxxxxxxxxxxxxxxx'
+        };
+      }
+
       const updateData: any = {};
       if (params.description !== undefined) {
         updateData.description = params.description;
@@ -436,6 +457,13 @@ export class PaymentTools {
         };
       }
 
+      if (!this.validateChargeId(params.charge_id)) {
+        return {
+          success: false,
+          error: 'Invalid charge ID format. Must be in format: chrg_xxxxxxxxxxxxxxxx'
+        };
+      }
+
       const captureData: any = {};
       if (params.amount !== undefined) {
         if (params.amount <= 0) {
@@ -474,6 +502,13 @@ export class PaymentTools {
         };
       }
 
+      if (!this.validateChargeId(params.charge_id)) {
+        return {
+          success: false,
+          error: 'Invalid charge ID format. Must be in format: chrg_xxxxxxxxxxxxxxxx'
+        };
+      }
+
       const reverseData: any = {};
       if (params.amount !== undefined) {
         if (params.amount <= 0) {
@@ -509,6 +544,13 @@ export class PaymentTools {
         return {
           success: false,
           error: 'Charge ID is required and must be a string'
+        };
+      }
+
+      if (!this.validateChargeId(params.charge_id)) {
+        return {
+          success: false,
+          error: 'Invalid charge ID format. Must be in format: chrg_xxxxxxxxxxxxxxxx'
         };
       }
 

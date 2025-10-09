@@ -9,8 +9,8 @@ import { Logger } from '../../src/utils/logger';
 import { createMockCharge } from '../factories/index';
 
 // モックの設定
-jest.mock('../../src/utils/omise-client.js');
-jest.mock('../../src/utils/logger.js');
+jest.mock('../../src/utils/omise-client');
+jest.mock('../../src/utils/logger');
 
 describe('PaymentTools', () => {
   let paymentTools: PaymentTools;
@@ -108,10 +108,10 @@ describe('PaymentTools', () => {
     it('正常系: チャージを取得できる', async () => {
       // Arrange
       const mockCharge = createMockCharge();
-      mockOmiseClient.get.mockResolvedValue(mockCharge);
+      mockOmiseClient.getCharge.mockResolvedValue(mockCharge);
 
       const params = {
-        charge_id: 'chrg_1234567890'
+        charge_id: 'chrg_test_1234567890123456789'
       };
 
       // Act
@@ -120,7 +120,7 @@ describe('PaymentTools', () => {
       // Assert
       expect(result.success).toBe(true);
       expect(result.data).toEqual(mockCharge);
-      expect(mockOmiseClient.get).toHaveBeenCalledWith('/charges/chrg_1234567890');
+      expect(mockOmiseClient.getCharge).toHaveBeenCalledWith('chrg_test_1234567890123456789');
     });
 
     it('異常系: 無効なチャージIDでエラー', async () => {
@@ -135,7 +135,7 @@ describe('PaymentTools', () => {
       // Assert
       expect(result.success).toBe(false);
       expect(result.error).toContain('Invalid charge ID format');
-      expect(mockOmiseClient.get).not.toHaveBeenCalled();
+      expect(mockOmiseClient.getCharge).not.toHaveBeenCalled();
     });
   });
 
@@ -151,7 +151,7 @@ describe('PaymentTools', () => {
         order: 'chronological',
         location: '/charges'
       };
-      mockOmiseClient.get.mockResolvedValue(mockCharges);
+      mockOmiseClient.listCharges.mockResolvedValue(mockCharges);
 
       const params = {
         limit: 20,
@@ -164,7 +164,7 @@ describe('PaymentTools', () => {
       // Assert
       expect(result.success).toBe(true);
       expect(result.data).toEqual(mockCharges);
-      expect(mockOmiseClient.get).toHaveBeenCalledWith('/charges', { limit: 20, offset: 0 });
+      expect(mockOmiseClient.listCharges).toHaveBeenCalledWith({ limit: 20, offset: 0, order: 'chronological' });
     });
 
     it('正常系: デフォルトパラメータで取得できる', async () => {
@@ -178,14 +178,14 @@ describe('PaymentTools', () => {
         order: 'chronological',
         location: '/charges'
       };
-      mockOmiseClient.get.mockResolvedValue(mockCharges);
+      mockOmiseClient.listCharges.mockResolvedValue(mockCharges);
 
       // Act
       const result = await paymentTools.listCharges({});
 
       // Assert
       expect(result.success).toBe(true);
-      expect(mockOmiseClient.get).toHaveBeenCalledWith('/charges', {});
+      expect(mockOmiseClient.listCharges).toHaveBeenCalledWith({ limit: 20, offset: 0, order: 'chronological' });
     });
   });
 
@@ -196,7 +196,7 @@ describe('PaymentTools', () => {
       mockOmiseClient.put.mockResolvedValue(mockCharge);
 
       const params = {
-        charge_id: 'chrg_1234567890',
+        charge_id: 'chrg_test_1234567890123456789',
         description: 'Updated charge'
       };
 
@@ -206,7 +206,7 @@ describe('PaymentTools', () => {
       // Assert
       expect(result.success).toBe(true);
       expect(result.data).toEqual(mockCharge);
-      expect(mockOmiseClient.put).toHaveBeenCalledWith('/charges/chrg_1234567890', {
+      expect(mockOmiseClient.put).toHaveBeenCalledWith('/charges/chrg_test_1234567890123456789', {
         description: 'Updated charge'
       });
     });
@@ -214,7 +214,7 @@ describe('PaymentTools', () => {
     it('異常系: 更新データなしでエラー', async () => {
       // Arrange
       const params = {
-        charge_id: 'chrg_1234567890'
+        charge_id: 'chrg_test_1234567890123456789'
       };
 
       // Act
@@ -234,7 +234,7 @@ describe('PaymentTools', () => {
       mockOmiseClient.post.mockResolvedValue(mockCharge);
 
       const params = {
-        charge_id: 'chrg_1234567890'
+        charge_id: 'chrg_test_1234567890123456789'
       };
 
       // Act
@@ -243,7 +243,7 @@ describe('PaymentTools', () => {
       // Assert
       expect(result.success).toBe(true);
       expect(result.data).toEqual(mockCharge);
-      expect(mockOmiseClient.post).toHaveBeenCalledWith('/charges/chrg_1234567890/capture', {});
+      expect(mockOmiseClient.post).toHaveBeenCalledWith('/charges/chrg_test_1234567890123456789/capture', {});
     });
   });
 
@@ -254,7 +254,7 @@ describe('PaymentTools', () => {
       mockOmiseClient.post.mockResolvedValue(mockCharge);
 
       const params = {
-        charge_id: 'chrg_1234567890'
+        charge_id: 'chrg_test_1234567890123456789'
       };
 
       // Act
@@ -263,7 +263,7 @@ describe('PaymentTools', () => {
       // Assert
       expect(result.success).toBe(true);
       expect(result.data).toEqual(mockCharge);
-      expect(mockOmiseClient.post).toHaveBeenCalledWith('/charges/chrg_1234567890/reverse', {});
+      expect(mockOmiseClient.post).toHaveBeenCalledWith('/charges/chrg_test_1234567890123456789/reverse', {});
     });
   });
 
@@ -274,7 +274,7 @@ describe('PaymentTools', () => {
       mockOmiseClient.post.mockResolvedValue(mockCharge);
 
       const params = {
-        charge_id: 'chrg_1234567890'
+        charge_id: 'chrg_test_1234567890123456789'
       };
 
       // Act
@@ -283,7 +283,7 @@ describe('PaymentTools', () => {
       // Assert
       expect(result.success).toBe(true);
       expect(result.data).toEqual(mockCharge);
-      expect(mockOmiseClient.post).toHaveBeenCalledWith('/charges/chrg_1234567890/expire', {});
+      expect(mockOmiseClient.post).toHaveBeenCalledWith('/charges/chrg_test_1234567890123456789/expire', {});
     });
   });
 });
