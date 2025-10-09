@@ -2,10 +2,10 @@
  * Health Check Implementation
  */
 
-import { Request, Response } from 'express';
-import { OmiseClient } from './omise-client';
-import { Logger } from './logger';
-import { ServerConfig } from '../types/mcp';
+import type { Request, Response } from 'express';
+import { OmiseClient } from './omise-client.js';
+import { Logger } from './logger.js';
+import { ServerConfig } from '../types/mcp.js';
 
 export interface HealthCheckResult {
   status: 'healthy' | 'unhealthy' | 'degraded';

@@ -3,7 +3,7 @@
  */
 
 import dotenv from 'dotenv';
-import { ServerConfig } from '../types/mcp';
+import { ServerConfig } from '../types/mcp.js';
 
 // Load environment variables
 dotenv.config();
@@ -34,6 +34,7 @@ export function loadConfig(): ServerConfig {
       environment,
       apiVersion: process.env.OMISE_API_VERSION || '2017-11-02',
       baseUrl: process.env.OMISE_BASE_URL || 'https://api.omise.co',
+      vaultUrl: process.env.OMISE_VAULT_URL || 'https://vault.omise.co',
       timeout: parseInt(process.env.OMISE_TIMEOUT || '30000', 10),
       retryAttempts: parseInt(process.env.OMISE_RETRY_ATTEMPTS || '3', 10),
       retryDelay: parseInt(process.env.OMISE_RETRY_DELAY || '1000', 10)
