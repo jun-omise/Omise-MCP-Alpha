@@ -11,6 +11,19 @@ export interface OmiseConfig {
   secretKey: string;
   environment: 'production' | 'test';
   apiVersion: string;
+  baseUrl: string;
+  vaultUrl: string;
+  timeout: number;
+  retryAttempts: number;
+  retryDelay: number;
+  server?: {
+    name: string;
+    version: string;
+  };
+  logging?: {
+    enableRequestLogging: boolean;
+    enableResponseLogging: boolean;
+  };
 }
 
 export interface OmiseError {
@@ -217,6 +230,7 @@ export interface OmiseDispute extends OmiseBaseObject {
 
 export interface OmiseDisputeDocument {
   object: 'dispute_document';
+  id: string;
   filename: string;
   created: string;
 }
@@ -270,6 +284,10 @@ export interface OmiseOccurrence extends OmiseBaseObject {
   status: 'successful' | 'failed' | 'skipped';
   message?: string;
   result?: string;
+}
+
+export interface OmiseScheduleOccurrence extends OmiseOccurrence {
+  // Additional properties specific to schedule occurrences
 }
 
 // ============================================================================
@@ -366,6 +384,15 @@ export interface OmiseChain extends OmiseBaseObject {
   metadata?: OmiseMetadata;
 }
 
+export interface OmiseChainRevision extends OmiseBaseObject {
+  object: 'chain_revision';
+  chain: string;
+  key: string;
+  revoked: boolean;
+  revoked_at?: string;
+  metadata?: OmiseMetadata;
+}
+
 // ============================================================================
 // Request Type Definitions
 // ============================================================================
@@ -403,7 +430,10 @@ export interface CreateTokenRequest {
 
 export interface CreateTransferRequest {
   amount: number;
+  currency?: string;
   recipient: string;
+  description?: string;
+  scheduled_date?: string;
   metadata?: OmiseMetadata;
 }
 
@@ -423,6 +453,8 @@ export interface CreateRecipientRequest {
 
 export interface CreateRefundRequest {
   amount?: number;
+  reason?: string;
+  description?: string;
   metadata?: OmiseMetadata;
 }
 
@@ -431,6 +463,10 @@ export interface CreateLinkRequest {
   currency: string;
   description?: string;
   title?: string;
+  multiple?: boolean;
+  used?: boolean;
+  charges?: any[];
+  payment_uri?: string;
   metadata?: OmiseMetadata;
 }
 
@@ -447,12 +483,25 @@ export interface CreateScheduleRequest {
   on?: OmiseScheduleOn;
   start_date: string;
   end_date?: string;
+  timezone?: string;
+  description?: string;
   charge: {
     customer: string;
     amount: number;
     currency: string;
     description?: string;
   };
+  metadata?: OmiseMetadata;
+}
+
+export interface CreateChainRequest {
+  email?: string;
+  name?: string;
+  description?: string;
+  webhook_uri?: string;
+  steps?: any[];
+  rollback_steps?: any[];
+  timeout?: number;
   metadata?: OmiseMetadata;
 }
 
@@ -485,6 +534,13 @@ export interface UpdateScheduleRequest {
   period?: 'day' | 'week' | 'month';
   on?: OmiseScheduleOn;
   end_date?: string;
+  metadata?: OmiseMetadata;
+}
+
+export interface UpdateTransferRequest {
+  amount?: number;
+  description?: string;
+  scheduled_date?: string;
   metadata?: OmiseMetadata;
 }
 
@@ -531,82 +587,9 @@ export interface OmiseWebhook {
   updated_at: string;
 }
 
-export interface OmiseWebhookEndpoint extends OmiseBaseObject {
-  object: 'webhook_endpoint';
-  url: string;
-  disabled: boolean;
+export interface OmiseWebhookEndpoint extends OmiseWebhook {
   events: string[];
-}
-
-export interface CreateWebhookEndpointRequest {
-  url: string;
-  events: string[];
-  disabled?: boolean;
   metadata?: OmiseMetadata;
-}
-
-export interface UpdateWebhookEndpointRequest {
-  url?: string;
-  events?: string[];
-  disabled?: boolean;
-  metadata?: OmiseMetadata;
-}
-
-export interface CreateDisputeRequest {
-  charge: string;
-  amount?: number;
-  reason?: string;
-  metadata?: OmiseMetadata;
-}
-
-export interface UpdateDisputeRequest {
-  message?: string;
-  metadata?: OmiseMetadata;
-}
-
-export interface CreateEventRequest {
-  type: string;
-  data: any;
-  metadata?: OmiseMetadata;
-}
-
-export interface CreateChainRequest {
-  name: string;
-  description?: string;
-  steps: OmiseChainStep[];
-  metadata?: OmiseMetadata;
-}
-
-export interface CreateCapabilityRequest {
-  name: string;
-  description?: string;
-  features: string[];
-  metadata?: OmiseMetadata;
-}
-
-export interface OmiseChainRevision extends OmiseBaseObject {
-  object: 'chain_revision';
-  chain: string;
-  step_id: string;
-  status: 'pending' | 'completed' | 'failed';
-  result?: any;
-  error?: string;
-}
-
-export interface OmiseChainStep {
-  id: string;
-  action: string;
-  parameters?: any;
-  condition?: any;
-}
-
-export interface OmiseScheduleOccurrence extends OmiseBaseObject {
-  object: 'schedule_occurrence';
-  schedule: string;
-  processed_at: string;
-  status: 'successful' | 'failed';
-  result?: any;
-  error?: string;
 }
 
 // ============================================================================
@@ -657,5 +640,22 @@ export interface CreateWebhookRequest {
 export interface UpdateWebhookRequest {
   url?: string;
   disabled?: boolean;
+  metadata?: OmiseMetadata;
+}
+
+export interface CreateWebhookEndpointRequest {
+  url: string;
+  events: string[];
+  description?: string;
+  secret_key?: string;
+  metadata?: OmiseMetadata;
+}
+
+export interface UpdateWebhookEndpointRequest {
+  url?: string;
+  events?: string[];
+  disabled?: boolean;
+  description?: string;
+  secret_key?: string;
   metadata?: OmiseMetadata;
 }
