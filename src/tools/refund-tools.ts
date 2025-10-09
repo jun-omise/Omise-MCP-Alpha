@@ -139,13 +139,17 @@ export class RefundTools {
   // ============================================================================
 
   private validateRefundId(refundId: string): boolean {
-    // Omise refund ID format: rfnd_xxxxxxxxxxxxxxxx
-    return /^rfnd_[a-zA-Z0-9]{16}$/.test(refundId);
+    // Omise refund ID format: 
+    // Test: rfnd_test_xxxxxxxxxxxxxxxx (19 chars after test_)
+    // Production: rfnd_xxxxxxxxxxxxxxxx (19 chars after rfnd_)
+    return /^rfnd_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/.test(refundId);
   }
 
   private validateChargeId(chargeId: string): boolean {
-    // Omise charge ID format: chrg_xxxxxxxxxxxxxxxx
-    return /^chrg_[a-zA-Z0-9]{16}$/.test(chargeId);
+    // Omise charge ID format:
+    // Test: chrg_test_xxxxxxxxxxxxxxxx (19 chars after test_)
+    // Production: chrg_xxxxxxxxxxxxxxxx (19 chars after chrg_)
+    return /^chrg_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/.test(chargeId);
   }
 
   private validateRefundReason(reason: string): boolean {

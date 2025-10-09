@@ -99,8 +99,10 @@ export class TokenTools {
   // ============================================================================
 
   private validateTokenId(tokenId: string): boolean {
-    // Omise token ID format: tokn_xxxxxxxxxxxxxxxx
-    return /^tokn_[a-zA-Z0-9]{16}$/.test(tokenId);
+    // Omise token ID format:
+    // Test: tokn_test_xxxxxxxxxxxxxxxx (19 chars after test_)
+    // Production: tokn_xxxxxxxxxxxxxxxx (19 chars after tokn_)
+    return /^tokn_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/.test(tokenId);
   }
 
   private validateCardNumber(cardNumber: string): boolean {

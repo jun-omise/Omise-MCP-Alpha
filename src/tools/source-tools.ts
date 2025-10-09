@@ -141,8 +141,10 @@ export class SourceTools {
   // ============================================================================
 
   private validateSourceId(sourceId: string): boolean {
-    // Omise source ID format: src_xxxxxxxxxxxxxxxx
-    return /^src_[a-zA-Z0-9]{16}$/.test(sourceId);
+    // Omise source ID format:
+    // Test: src_test_xxxxxxxxxxxxxxxx (19 chars after test_)
+    // Production: src_xxxxxxxxxxxxxxxx (19 chars after src_)
+    return /^src_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/.test(sourceId);
   }
 
   private validateCurrency(currency: string): boolean {

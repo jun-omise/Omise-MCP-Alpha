@@ -265,8 +265,10 @@ export class RecipientTools {
   // ============================================================================
 
   private validateRecipientId(recipientId: string): boolean {
-    // Omise recipient ID format: rcpt_xxxxxxxxxxxxxxxx
-    return /^rcpt_[a-zA-Z0-9]{16}$/.test(recipientId);
+    // Omise recipient ID format:
+    // Test: rcpt_test_xxxxxxxxxxxxxxxx (19 chars after test_)
+    // Production: rcpt_xxxxxxxxxxxxxxxx (19 chars after rcpt_)
+    return /^rcpt_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/.test(recipientId);
   }
 
   private validateEmail(email: string): boolean {

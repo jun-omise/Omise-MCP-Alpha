@@ -226,8 +226,10 @@ export class WebhookTools {
   // ============================================================================
 
   private validateEndpointId(endpointId: string): boolean {
-    // Omise webhook endpoint ID format: wbhk_xxxxxxxxxxxxxxxx
-    return /^wbhk_[a-zA-Z0-9]{16}$/.test(endpointId);
+    // Omise webhook endpoint ID format:
+    // Test: wbhk_test_xxxxxxxxxxxxxxxx (19 chars after test_)
+    // Production: wbhk_xxxxxxxxxxxxxxxx (19 chars after wbhk_)
+    return /^wbhk_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/.test(endpointId);
   }
 
   private validateUrl(url: string): boolean {
