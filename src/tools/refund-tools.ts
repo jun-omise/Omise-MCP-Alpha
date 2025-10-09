@@ -12,15 +12,15 @@ interface Tool {
     required?: string[];
   };
 }
-import { OmiseClient } from '../utils/omise-client';
-import { Logger } from '../utils/logger';
-import { ToolResult } from '../types/mcp';
+import { OmiseClient } from '../utils/omise-client.js';
+import { Logger } from '../utils/logger.js';
+import { ToolResult } from '../types/mcp.js';
 import { 
   CreateRefundRequest, 
   OmiseRefund,
   OmiseListResponse,
   OmiseMetadata 
-} from '../types/omise';
+} from '../types/omise.js';
 
 export class RefundTools {
   private omiseClient: OmiseClient;
@@ -137,7 +137,7 @@ export class RefundTools {
   // ============================================================================
   // Validation Functions
   // ============================================================================
-
+  
   private validateRefundId(refundId: string): boolean {
     // Omise refund ID format: 
     // Test: rfnd_test_xxxxxxxxxxxxxxxx (19 chars after test_)

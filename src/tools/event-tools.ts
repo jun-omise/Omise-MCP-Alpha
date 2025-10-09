@@ -12,13 +12,13 @@ interface Tool {
     required?: string[];
   };
 }
-import { OmiseClient } from '../utils/omise-client';
-import { Logger } from '../utils/logger';
-import { ToolResult } from '../types/mcp';
-import { 
+import { OmiseClient } from '../utils/omise-client.js';
+import { Logger } from '../utils/logger.js';
+import type { ToolResult } from '../types/mcp.js';
+import type { 
   OmiseEvent,
   OmiseListResponse 
-} from '../types/omise';
+} from '../types/omise.js';
 
 export class EventTools {
   private omiseClient: OmiseClient;
@@ -137,17 +137,16 @@ export class EventTools {
 
   private validateResourceKey(key: string): boolean {
     // Resource key format validation (charge, customer, card, transfer, recipient, refund, dispute, schedule, link)
-    // Supports both test and production formats: {type}_test_xxxxxxxxxxxxxxxx or {type}_xxxxxxxxxxxxxxxx
     const resourcePatterns = [
-      /^chrg_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/,  // charge
-      /^cust_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/,  // customer
-      /^card_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/,  // card
-      /^trsf_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/,  // transfer
-      /^rcpt_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/,  // recipient
-      /^rfnd_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/,  // refund
-      /^dspt_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/,  // dispute
-      /^schd_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/,  // schedule
-      /^link_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/   // link
+      /^chrg_[a-zA-Z0-9]{16}$/,  // charge
+      /^cust_[a-zA-Z0-9]{16}$/,  // customer
+      /^card_[a-zA-Z0-9]{16}$/,  // card
+      /^trsf_[a-zA-Z0-9]{16}$/,  // transfer
+      /^rcpt_[a-zA-Z0-9]{16}$/,  // recipient
+      /^rfnd_[a-zA-Z0-9]{16}$/,  // refund
+      /^dspt_[a-zA-Z0-9]{16}$/,  // dispute
+      /^schd_[a-zA-Z0-9]{16}$/,  // schedule
+      /^link_[a-zA-Z0-9]{16}$/   // link
     ];
     return resourcePatterns.some(pattern => pattern.test(key));
   }

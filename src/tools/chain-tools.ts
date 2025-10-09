@@ -12,16 +12,16 @@ interface Tool {
     required?: string[];
   };
 }
-import { OmiseClient } from '../utils/omise-client';
-import { Logger } from '../utils/logger';
-import { ToolResult } from '../types/mcp';
-import { 
-  CreateChainRequest, 
+import { OmiseClient } from '../utils/omise-client.js';
+import { Logger } from '../utils/logger.js';
+import type { ToolResult } from '../types/mcp.js';
+import type {
+  CreateChainRequest,
   OmiseChain,
   OmiseChainRevision,
   OmiseListResponse,
-  OmiseMetadata 
-} from '../types/omise';
+  OmiseMetadata,
+} from '../types/omise.js';
 
 export class ChainTools {
   private omiseClient: OmiseClient;

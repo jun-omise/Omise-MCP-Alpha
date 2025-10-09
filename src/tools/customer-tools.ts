@@ -12,9 +12,9 @@ interface Tool {
     required?: string[];
   };
 }
-import { OmiseClient } from '../utils/omise-client';
-import { Logger } from '../utils/logger';
-import type { CustomerToolParams, ToolResult } from '../types/mcp';
+import { OmiseClient } from '../utils/omise-client.js';
+import { Logger } from '../utils/logger.js';
+import type { CustomerToolParams, ToolResult } from '../types/mcp.js';
 import type {
   CreateCustomerRequest,
   UpdateCustomerRequest,
@@ -22,7 +22,7 @@ import type {
   OmiseCard,
   OmiseListResponse,
   OmiseMetadata
-} from '../types/omise';
+} from '../types/omise.js';
 
 export class CustomerTools {
   private omiseClient: OmiseClient;

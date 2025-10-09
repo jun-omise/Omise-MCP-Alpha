@@ -2,17 +2,17 @@
  * Tool Exports
  */
 
-export * from './payment-tools';
-export * from './customer-tools';
-export * from './token-tools';
-export * from './source-tools';
-export * from './transfer-tools';
-export * from './recipient-tools';
-export * from './refund-tools';
-export * from './dispute-tools';
-export * from './schedule-tools';
-export * from './event-tools';
-export * from './webhook-tools';
-export * from './link-tools';
-export * from './chain-tools';
-export * from './capability-tools';
+export * from './payment-tools.js';
+export * from './customer-tools.js';
+export * from './token-tools.js';
+export * from './source-tools.js';
+export * from './transfer-tools.js';
+export * from './recipient-tools.js';
+export * from './refund-tools.js';
+export * from './dispute-tools.js';
+export * from './schedule-tools.js';
+export * from './event-tools.js';
+export * from './webhook-tools.js';
+export * from './link-tools.js';
+export * from './chain-tools.js';
+export * from './capability-tools.js';
