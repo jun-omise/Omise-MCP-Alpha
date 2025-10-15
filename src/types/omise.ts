@@ -90,6 +90,33 @@ export interface OmiseCharge extends OmiseBaseObject {
   return_uri?: string;
   authorize_uri?: string;
   metadata?: OmiseMetadata;
+  // Partial Capture fields
+  authorization_type?: 'pre_auth' | 'final_auth';
+  authorized_amount?: number;
+  captured_amount?: number;
+  capturable?: boolean;
+  reversible?: boolean;
+  reversed?: boolean;
+  reversed_at?: string;
+  authorized_at?: string;
+  paid_at?: string;
+  expires_at?: string;
+  expired_at?: string;
+  expired?: boolean;
+  // Financial fields
+  net?: number;
+  fee?: number;
+  fee_vat?: number;
+  interest?: number;
+  interest_vat?: number;
+  funding_amount?: number;
+  refunded_amount?: number;
+  // Status flags
+  refundable?: boolean;
+  partially_refundable?: boolean;
+  disputable?: boolean;
+  voided?: boolean;
+  multi_capture?: boolean;
 }
 
 // ============================================================================
@@ -406,6 +433,7 @@ export interface CreateChargeRequest {
   customer?: string;
   source?: string;
   return_uri?: string;
+  authorization_type?: 'pre_auth';
   metadata?: OmiseMetadata;
 }
 

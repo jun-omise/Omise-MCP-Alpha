@@ -68,8 +68,13 @@ export class PaymentTools {
             },
             capture: {
               type: 'boolean',
-              description: 'Whether to capture the charge immediately (default: true)',
+              description: 'Whether to capture the charge immediately (default: true). Must be false for partial capture. When false with authorization_type=pre_auth, amount is authorized with capture_amount=0, allowing later partial/full capture.',
               default: true
+            },
+            authorization_type: {
+              type: 'string',
+              description: 'Authorization type. Use "pre_auth" to enable partial capture (single or multi-capture). Required for partial capture functionality. When set, capture_amount starts at 0 and can be captured in one or multiple calls up to the authorized amount.',
+              enum: ['pre_auth']
             },
             return_uri: {
               type: 'string',
@@ -180,7 +185,7 @@ export class PaymentTools {
       },
       {
         name: 'capture_charge',
-        description: 'Capture an authorized charge',
+        description: 'Capture an authorized charge. Supports full capture, single partial capture, and multi-capture (multiple partial captures up to authorized amount). Prerequisites: charge must be created with capture=false, authorization_type=pre_auth, and currency must match account currency. Payment adapter must support partial capture.',
         inputSchema: {
           type: 'object',
           properties: {
@@ -190,7 +195,7 @@ export class PaymentTools {
             },
             amount: {
               type: 'number',
-              description: 'Amount to capture (must be less than or equal to authorized amount)',
+              description: 'Amount to capture in smallest currency unit (sent as capture_amount to API). Must be less than or equal to remaining authorized amount. If omitted, captures full remaining amount. Supports multiple partial captures until the total authorized amount is reached.',
               minimum: 1
             }
           },
@@ -312,7 +317,8 @@ export class PaymentTools {
         metadata: this.sanitizeMetadata(params.metadata),
         ...(params.customer && { customer: params.customer }),
         ...(params.card && { card: params.card }),
-        ...(params.source && { source: params.source })
+        ...(params.source && { source: params.source }),
+        ...(params.authorization_type && { authorization_type: params.authorization_type })
       };
 
       const charge = await this.omiseClient.createCharge(chargeParams);
@@ -472,7 +478,7 @@ export class PaymentTools {
             error: 'Capture amount must be positive'
           };
         }
-        captureData.amount = params.amount;
+        captureData.capture_amount = params.amount;
       }
 
       const charge = await this.omiseClient.post<OmiseCharge>(`/charges/${params.charge_id}/capture`, captureData);
