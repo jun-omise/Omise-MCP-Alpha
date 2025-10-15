@@ -28,31 +28,37 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.4.0",
+    "ajv": "^8.12.0",
     "axios": "^1.6.0",
+    "crypto": "^1.0.1",
     "dotenv": "^16.3.1",
-    "winston": "^3.11.0",
+    "json-schema": "^0.4.0",
     "jsonwebtoken": "^9.0.2",
-    "crypto": "^1.0.1"
+    "tslib": "^2.8.1",
+    "winston": "^3.11.0"
   },
   "devDependencies": {
-    "@types/node": "^20.9.0",
-    "@types/jest": "^29.5.8",
-    "@types/supertest": "^2.0.16",
-    "@types/jsonwebtoken": "^9.0.5",
-    "typescript": "^5.2.2",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.1.1",
-    "supertest": "^6.3.3",
-    "msw": "^2.0.8",
     "@faker-js/faker": "^8.4.0",
+    "@types/jest": "^29.5.8",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/node": "^20.9.0",
+    "@types/sinon": "^17.0.2",
+    "@types/supertest": "^2.0.16",
+    "jest": "^29.7.0",
+    "msw": "^2.0.8",
     "nock": "^13.4.0",
     "sinon": "^17.0.1",
-    "@types/sinon": "^17.0.2"
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
   },
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "roots": ["<rootDir>/src", "<rootDir>/tests"],
+    "roots": [
+      "<rootDir>/src",
+      "<rootDir>/tests"
+    ],
     "testMatch": [
       "**/tests/**/*.test.ts",
       "**/tests/**/*.spec.ts"
@@ -63,8 +69,14 @@
       "!src/index.ts"
     ],
     "coverageDirectory": "coverage",
-    "coverageReporters": ["text", "lcov", "html"],
-    "setupFilesAfterEnv": ["<rootDir>/tests/setup.ts"],
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "html"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.ts"
+    ],
     "testTimeout": 30000
   }
 }
