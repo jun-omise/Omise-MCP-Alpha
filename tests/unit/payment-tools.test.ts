@@ -102,6 +102,47 @@ describe('PaymentTools', () => {
       expect(result.success).toBe(false);
       expect(result.error).toBe('API Error');
     });
+
+    it('正常系: 部分キャプチャ用のチャージを作成できる (authorization_type=pre_auth)', async () => {
+      // Arrange
+      const mockCharge = createMockCharge({
+        amount: 260000,
+        authorization_type: 'pre_auth',
+        authorized_amount: 260000,
+        captured_amount: 0,
+        capture: false,
+        authorized: true,
+        capturable: true,
+        paid: false
+      });
+      mockOmiseClient.createCharge.mockResolvedValue(mockCharge);
+
+      const params = {
+        amount: 260000,
+        currency: 'THB',
+        card: 'tokn_test_123456789',
+        capture: false,
+        authorization_type: 'pre_auth'
+      };
+
+      // Act
+      const result = await paymentTools.createCharge(params);
+
+      // Assert
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockCharge);
+      expect(result.message).toContain('Charge created successfully');
+      expect(mockOmiseClient.createCharge).toHaveBeenCalledWith({
+        amount: 260000,
+        currency: 'THB',
+        card: 'tokn_test_123456789',
+        capture: false,
+        authorization_type: 'pre_auth'
+      });
+      expect(result.data?.authorization_type).toBe('pre_auth');
+      expect(result.data?.authorized_amount).toBe(260000);
+      expect(result.data?.captured_amount).toBe(0);
+    });
   });
 
   describe('retrieveCharge', () => {
@@ -244,6 +285,72 @@ describe('PaymentTools', () => {
       expect(result.success).toBe(true);
       expect(result.data).toEqual(mockCharge);
       expect(mockOmiseClient.post).toHaveBeenCalledWith('/charges/chrg_test_1234567890123456789/capture', {});
+    });
+
+    it('正常系: 部分キャプチャができる (capture_amount指定)', async () => {
+      // Arrange
+      const mockCharge = createMockCharge({
+        amount: 260000,
+        authorization_type: 'pre_auth',
+        authorized_amount: 260000,
+        captured_amount: 12000,
+        capture: false,
+        authorized: true,
+        capturable: false,
+        paid: true,
+        reversed: true,
+        status: 'successful'
+      });
+      mockOmiseClient.post.mockResolvedValue(mockCharge);
+
+      const params = {
+        charge_id: 'chrg_test_1234567890123456789',
+        amount: 12000
+      };
+
+      // Act
+      const result = await paymentTools.captureCharge(params);
+
+      // Assert
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockCharge);
+      expect(mockOmiseClient.post).toHaveBeenCalledWith('/charges/chrg_test_1234567890123456789/capture', {
+        capture_amount: 12000
+      });
+      expect(result.data?.captured_amount).toBe(12000);
+      expect(result.data?.reversed).toBe(true);
+    });
+
+    it('異常系: 無効な金額でエラー', async () => {
+      // Arrange
+      const params = {
+        charge_id: 'chrg_test_1234567890123456789',
+        amount: -100
+      };
+
+      // Act
+      const result = await paymentTools.captureCharge(params);
+
+      // Assert
+      expect(result.success).toBe(false);
+      expect(result.error).toContain('Capture amount must be positive');
+      expect(mockOmiseClient.post).not.toHaveBeenCalled();
+    });
+
+    it('異常系: 無効なチャージIDでエラー', async () => {
+      // Arrange
+      const params = {
+        charge_id: 'invalid_id',
+        amount: 1000
+      };
+
+      // Act
+      const result = await paymentTools.captureCharge(params);
+
+      // Assert
+      expect(result.success).toBe(false);
+      expect(result.error).toContain('Invalid charge ID format');
+      expect(mockOmiseClient.post).not.toHaveBeenCalled();
     });
   });
 
