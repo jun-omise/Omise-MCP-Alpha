@@ -101,6 +101,43 @@ cp config/development.env .env
 export OMISE_PUBLIC_KEY=pkey_test_xxxxxxxxxxxxxxxx
 export OMISE_SECRET_KEY=skey_test_xxxxxxxxxxxxxxxx
 export OMISE_ENVIRONMENT=test
+export OMISE_API_VERSION=2019-05-29
+export OMISE_BASE_URL=https://api.omise.co
+export OMISE_VAULT_URL=https://vault.omise.co
+```
+
+#### 2.4. Environment-Specific Configuration
+
+**For Development:**
+```bash
+cp config/development.env .env
+# Use test API keys, enable verbose logging
+```
+
+**For Staging:**
+```bash
+cp config/staging.env .env
+# Use test API keys, production-like settings
+```
+
+**For Production:**
+```bash
+cp config/production.env .env
+# Use live API keys, optimized for performance
+# OMISE_ENVIRONMENT=production
+# OMISE_PUBLIC_KEY=pkey_live_xxxxxxxxxxxxxxxx
+# OMISE_SECRET_KEY=skey_live_xxxxxxxxxxxxxxxx
+```
+
+#### 2.5. Verify Configuration
+
+```bash
+# Test your API key configuration
+npm run dev
+
+# Or verify with a simple check
+echo $OMISE_PUBLIC_KEY | grep -q "pkey_" && echo "✅ Public key configured" || echo "❌ Public key missing"
+echo $OMISE_SECRET_KEY | grep -q "skey_" && echo "✅ Secret key configured" || echo "❌ Secret key missing"
 ```
 
 ### 3. Start Development Server

@@ -12,9 +12,9 @@ interface Tool {
     required?: string[];
   };
 }
-import { OmiseClient } from '../utils/omise-client';
-import { Logger } from '../utils/logger';
-import type { CustomerToolParams, ToolResult } from '../types/mcp';
+import { OmiseClient } from '../utils/omise-client.js';
+import { Logger } from '../utils/logger.js';
+import type { CustomerToolParams, ToolResult } from '../types/mcp.js';
 import type {
   CreateCustomerRequest,
   UpdateCustomerRequest,
@@ -22,7 +22,7 @@ import type {
   OmiseCard,
   OmiseListResponse,
   OmiseMetadata
-} from '../types/omise';
+} from '../types/omise.js';
 
 export class CustomerTools {
   private omiseClient: OmiseClient;
@@ -294,11 +294,17 @@ export class CustomerTools {
   // ============================================================================
 
   private validateCustomerId(customerId: string): boolean {
-    return /^cust_[a-zA-Z0-9]{16}$/.test(customerId);
+    // Omise customer ID format:
+    // Test: cust_test_xxxxxxxxxxxxxxxx (19 chars after test_)
+    // Production: cust_xxxxxxxxxxxxxxxx (19 chars after cust_)
+    return /^cust_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/.test(customerId);
   }
 
   private validateCardId(cardId: string): boolean {
-    return /^card_[a-zA-Z0-9]{16}$/.test(cardId);
+    // Omise card ID format:
+    // Test: card_test_xxxxxxxxxxxxxxxx (19 chars after test_)
+    // Production: card_xxxxxxxxxxxxxxxx (19 chars after card_)
+    return /^card_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/.test(cardId);
   }
 
   private validateEmail(email: string): boolean {

@@ -3,7 +3,7 @@
  */
 
 import winston from 'winston';
-import { ServerConfig } from '../types/mcp';
+import { ServerConfig } from '../types/mcp.js';
 
 export class Logger {
   private logger: winston.Logger;
@@ -21,6 +21,7 @@ export class Logger {
     transports.push(
       new winston.transports.Console({
         level: this.config.logging.level,
+        stderrLevels: ['error', 'warn', 'info', 'debug', 'verbose', 'silly'], // ALL logs to stderr for MCP
         format: this.getConsoleFormat()
       })
     );

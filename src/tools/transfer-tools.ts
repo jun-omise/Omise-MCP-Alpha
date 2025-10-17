@@ -12,16 +12,16 @@ interface Tool {
     required?: string[];
   };
 }
-import { OmiseClient } from '../utils/omise-client';
-import { Logger } from '../utils/logger';
-import { ToolResult } from '../types/mcp';
+import { OmiseClient } from '../utils/omise-client.js';
+import { Logger } from '../utils/logger.js';
+import { ToolResult } from '../types/mcp.js';
 import { 
   CreateTransferRequest, 
   UpdateTransferRequest,
   OmiseTransfer,
   OmiseListResponse,
   OmiseMetadata 
-} from '../types/omise';
+} from '../types/omise.js';
 
 export class TransferTools {
   private omiseClient: OmiseClient;
@@ -194,13 +194,17 @@ export class TransferTools {
   // ============================================================================
 
   private validateTransferId(transferId: string): boolean {
-    // Omise transfer ID format: trsf_xxxxxxxxxxxxxxxx
-    return /^trsf_[a-zA-Z0-9]{16}$/.test(transferId);
+    // Omise transfer ID format:
+    // Test: trsf_test_xxxxxxxxxxxxxxxx (19 chars after test_)
+    // Production: trsf_xxxxxxxxxxxxxxxx (19 chars after trsf_)
+    return /^trsf_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/.test(transferId);
   }
 
   private validateRecipientId(recipientId: string): boolean {
-    // Omise recipient ID format: rcpt_xxxxxxxxxxxxxxxx
-    return /^rcpt_[a-zA-Z0-9]{16}$/.test(recipientId);
+    // Omise recipient ID format:
+    // Test: rcpt_test_xxxxxxxxxxxxxxxx (19 chars after test_)
+    // Production: rcpt_xxxxxxxxxxxxxxxx (19 chars after rcpt_)
+    return /^rcpt_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/.test(recipientId);
   }
 
   private validateCurrency(currency: string): boolean {

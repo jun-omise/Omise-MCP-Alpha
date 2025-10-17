@@ -12,15 +12,15 @@ interface Tool {
     required?: string[];
   };
 }
-import { OmiseClient } from '../utils/omise-client';
-import { Logger } from '../utils/logger';
-import { ToolResult } from '../types/mcp';
-import { 
+import { OmiseClient } from '../utils/omise-client.js';
+import { Logger } from '../utils/logger.js';
+import type { ToolResult } from '../types/mcp.js';
+import type { 
   OmiseDispute,
   OmiseDisputeDocument,
   OmiseListResponse,
   OmiseMetadata 
-} from '../types/omise';
+} from '../types/omise.js';
 
 export class DisputeTools {
   private omiseClient: OmiseClient;
@@ -256,13 +256,17 @@ export class DisputeTools {
   // ============================================================================
 
   private validateDisputeId(disputeId: string): boolean {
-    // Omise dispute ID format: dspt_xxxxxxxxxxxxxxxx
-    return /^dspt_[a-zA-Z0-9]{16}$/.test(disputeId);
+    // Omise dispute ID format:
+    // Test: dspt_test_xxxxxxxxxxxxxxxx (19 chars after test_)
+    // Production: dspt_xxxxxxxxxxxxxxxx (19 chars after dspt_)
+    return /^dspt_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/.test(disputeId);
   }
 
   private validateDocumentId(documentId: string): boolean {
-    // Omise document ID format: docu_xxxxxxxxxxxxxxxx
-    return /^docu_[a-zA-Z0-9]{16}$/.test(documentId);
+    // Omise document ID format:
+    // Test: docu_test_xxxxxxxxxxxxxxxx (19 chars after test_)
+    // Production: docu_xxxxxxxxxxxxxxxx (19 chars after docu_)
+    return /^docu_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/.test(documentId);
   }
 
   private validateContentType(contentType: string): boolean {

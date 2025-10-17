@@ -12,13 +12,13 @@ interface Tool {
     required?: string[];
   };
 }
-import { OmiseClient } from '../utils/omise-client';
-import { Logger } from '../utils/logger';
-import { ToolResult } from '../types/mcp';
-import { 
+import { OmiseClient } from '../utils/omise-client.js';
+import { Logger } from '../utils/logger.js';
+import type { ToolResult } from '../types/mcp.js';
+import type { 
   OmiseEvent,
   OmiseListResponse 
-} from '../types/omise';
+} from '../types/omise.js';
 
 export class EventTools {
   private omiseClient: OmiseClient;
@@ -114,8 +114,10 @@ export class EventTools {
   // ============================================================================
 
   private validateEventId(eventId: string): boolean {
-    // Omise event ID format: evnt_xxxxxxxxxxxxxxxx
-    return /^evnt_[a-zA-Z0-9]{16}$/.test(eventId);
+    // Omise event ID format:
+    // Test: evnt_test_xxxxxxxxxxxxxxxx (19 chars after test_)
+    // Production: evnt_xxxxxxxxxxxxxxxx (19 chars after evnt_)
+    return /^evnt_(test_[a-zA-Z0-9]{19}|[a-zA-Z0-9]{19})$/.test(eventId);
   }
 
   private validateEventType(eventType: string): boolean {

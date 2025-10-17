@@ -14,9 +14,9 @@ import {
   OmiseResponse,
   OmiseError,
   OmiseListResponse
-} from '../types/omise';
-import { Logger } from './logger';
-import { RequestContext, ResponseContext, RateLimitInfo } from '../types/mcp';
+} from '../types/omise.js';
+import { Logger } from './logger.js';
+import { RequestContext, ResponseContext, RateLimitInfo } from '../types/mcp.js';
 
 export class OmiseClient {
   private client: AxiosInstance;
@@ -230,14 +230,15 @@ export class OmiseClient {
     return this.executeWithRetry(async () => {
       this.logger.info('Creating charge', { amount: params.amount, currency: params.currency });
       
-      const response = await this.client.post<OmiseResponse<OmiseCharge>>('/charges', params);
+      const response = await this.client.post<OmiseCharge>('/charges', params);
       
-      if (response.data.error) {
-        throw new Error(`Omise API Error: ${response.data.error.message}`);
+      // Charge API returns the charge directly, not wrapped in OmiseResponse
+      if (!response.data || !response.data.id) {
+        throw new Error(`Omise API Error: Invalid charge response`);
       }
 
-      this.logger.info('Charge created successfully', { chargeId: response.data.data?.id });
-      return response.data.data!;
+      this.logger.info('Charge created successfully', { chargeId: response.data.id });
+      return response.data;
     });
   }
 
@@ -245,13 +246,14 @@ export class OmiseClient {
     return this.executeWithRetry(async () => {
       this.logger.info('Retrieving charge', { chargeId });
       
-      const response = await this.client.get<OmiseResponse<OmiseCharge>>(`/charges/${chargeId}`);
+      const response = await this.client.get<OmiseCharge>(`/charges/${chargeId}`);
       
-      if (response.data.error) {
-        throw new Error(`Omise API Error: ${response.data.error.message}`);
+      // Charge API returns the charge directly, not wrapped in OmiseResponse
+      if (!response.data || !response.data.id) {
+        throw new Error(`Omise API Error: Invalid charge response`);
       }
 
-      return response.data.data!;
+      return response.data;
     });
   }
 
@@ -273,14 +275,15 @@ export class OmiseClient {
     return this.executeWithRetry(async () => {
       this.logger.info('Creating customer', { email: params.email });
       
-      const response = await this.client.post<OmiseResponse<OmiseCustomer>>('/customers', params);
+      const response = await this.client.post<OmiseCustomer>('/customers', params);
       
-      if (response.data.error) {
-        throw new Error(`Omise API Error: ${response.data.error.message}`);
+      // Customer API returns the customer directly, not wrapped in OmiseResponse
+      if (!response.data || !response.data.id) {
+        throw new Error(`Omise API Error: Invalid customer response`);
       }
 
-      this.logger.info('Customer created successfully', { customerId: response.data.data?.id });
-      return response.data.data!;
+      this.logger.info('Customer created successfully', { customerId: response.data.id });
+      return response.data;
     });
   }
 
@@ -288,13 +291,14 @@ export class OmiseClient {
     return this.executeWithRetry(async () => {
       this.logger.info('Retrieving customer', { customerId });
       
-      const response = await this.client.get<OmiseResponse<OmiseCustomer>>(`/customers/${customerId}`);
+      const response = await this.client.get<OmiseCustomer>(`/customers/${customerId}`);
       
-      if (response.data.error) {
-        throw new Error(`Omise API Error: ${response.data.error.message}`);
+      // Customer API returns the customer directly, not wrapped in OmiseResponse
+      if (!response.data || !response.data.id) {
+        throw new Error(`Omise API Error: Invalid customer response`);
       }
 
-      return response.data.data!;
+      return response.data;
     });
   }
 
@@ -316,14 +320,25 @@ export class OmiseClient {
     return this.executeWithRetry(async () => {
       this.logger.info('Creating token', { cardNumber: params.card.number.replace(/\d(?=\d{4})/g, '*') });
       
-      const response = await this.client.post<OmiseResponse<OmiseToken>>('/tokens', params);
+      // Token creation must use vault.omise.co domain, not api.omise.co
+      // AND must use public key for authentication, not secret key
+      const fullUrl = `${this.config.vaultUrl}/tokens`;
+      this.logger.info('Using vault URL for token creation', { vaultUrl: fullUrl });
       
-      if (response.data.error) {
-        throw new Error(`Omise API Error: ${response.data.error.message}`);
+      const response = await this.client.post<OmiseToken>(fullUrl, params, {
+        auth: {
+          username: this.config.publicKey,  // Use public key for token creation
+          password: ''
+        }
+      });
+      
+      // Token API returns the token directly, not wrapped in OmiseResponse
+      if (!response.data || !response.data.id) {
+        throw new Error(`Omise API Error: Invalid token response`);
       }
 
-      this.logger.info('Token created successfully', { tokenId: response.data.data?.id });
-      return response.data.data!;
+      this.logger.info('Token created successfully', { tokenId: response.data.id });
+      return response.data;
     });
   }
 
@@ -331,13 +346,21 @@ export class OmiseClient {
     return this.executeWithRetry(async () => {
       this.logger.info('Retrieving token', { tokenId });
       
-      const response = await this.client.get<OmiseResponse<OmiseToken>>(`/tokens/${tokenId}`);
+      // Token retrieval must also use vault.omise.co domain
+      const fullUrl = `${this.config.vaultUrl}/tokens/${tokenId}`;
+      const response = await this.client.get<OmiseToken>(fullUrl, {
+        auth: {
+          username: this.config.publicKey,  // Use public key for token operations
+          password: ''
+        }
+      });
       
-      if (response.data.error) {
-        throw new Error(`Omise API Error: ${response.data.error.message}`);
+      // Token API returns the token directly, not wrapped in OmiseResponse
+      if (!response.data || !response.data.id) {
+        throw new Error(`Omise API Error: Invalid token response`);
       }
 
-      return response.data.data!;
+      return response.data;
     });
   }
 

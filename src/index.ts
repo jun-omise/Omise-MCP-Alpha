@@ -7,27 +7,26 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
-  GetServerInfoRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 
-import { loadConfig, validateOmiseKeys, getServerInfo } from './utils/config';
-import { Logger } from './utils/logger';
-import { OmiseClient } from './utils/omise-client';
-import { PaymentTools } from './tools/payment-tools';
-import { CustomerTools } from './tools/customer-tools';
-import { TokenTools } from './tools/token-tools';
-import { SourceTools } from './tools/source-tools';
-import { TransferTools } from './tools/transfer-tools';
-import { RecipientTools } from './tools/recipient-tools';
-import { RefundTools } from './tools/refund-tools';
-import { DisputeTools } from './tools/dispute-tools';
-import { ScheduleTools } from './tools/schedule-tools';
-import { EventTools } from './tools/event-tools';
-import { WebhookTools } from './tools/webhook-tools';
-import { LinkTools } from './tools/link-tools';
-import { ChainTools } from './tools/chain-tools';
-import { CapabilityTools } from './tools/capability-tools';
-import { ServerInfo } from './types/mcp';
+import { loadConfig, validateOmiseKeys, getServerInfo } from './utils/config.js';
+import { Logger } from './utils/logger.js';
+import { OmiseClient } from './utils/omise-client.js';
+import { PaymentTools } from './tools/payment-tools.js';
+import { CustomerTools } from './tools/customer-tools.js';
+import { TokenTools } from './tools/token-tools.js';
+import { SourceTools } from './tools/source-tools.js';
+import { TransferTools } from './tools/transfer-tools.js';
+import { RecipientTools } from './tools/recipient-tools.js';
+import { RefundTools } from './tools/refund-tools.js';
+import { DisputeTools } from './tools/dispute-tools.js';
+import { ScheduleTools } from './tools/schedule-tools.js';
+import { EventTools } from './tools/event-tools.js';
+import { WebhookTools } from './tools/webhook-tools.js';
+import { LinkTools } from './tools/link-tools.js';
+import { ChainTools } from './tools/chain-tools.js';
+import { CapabilityTools } from './tools/capability-tools.js';
+import type { ServerInfo } from './types/mcp.js';
 
 async function main() {
   try {
@@ -39,7 +38,7 @@ async function main() {
     const logger = new Logger(config);
 
     // Initialize Omise client
-    const omiseClient = new OmiseClient(config.omise, logger);
+    const omiseClient = new OmiseClient({ ...config.omise, logging: config.logging }, logger);
 
     // Initialize tools
     const paymentTools = new PaymentTools(omiseClient, logger);
@@ -61,28 +60,12 @@ async function main() {
     const serverInfo = getServerInfo(config);
 
     // Initialize MCP server
-    const server = new Server(
-      {
-        name: config.server.name,
-        version: config.server.version,
-      },
-      {
-        capabilities: {
-          tools: {},
-          resources: {},
-        },
-      }
-    );
-
-    // Get server information
-    server.setRequestHandler(GetServerInfoRequestSchema, async () => {
-      return {
-        name: serverInfo.name,
-        version: serverInfo.version,
-        description: serverInfo.description,
-        capabilities: serverInfo.capabilities,
-      };
+    const server = new Server({
+      name: config.server.name,
+      version: config.server.version,
     });
+
+    // Server info is handled automatically by MCP SDK
 
     // Get list of tools
     server.setRequestHandler(ListToolsRequestSchema, async () => {
@@ -424,24 +407,28 @@ async function main() {
     });
 
   } catch (error) {
-    console.error('Failed to start Omise MCP Server:', error);
+    // Use stderr for error logging to avoid interfering with MCP JSON-RPC on stdout
+    process.stderr.write(`Failed to start Omise MCP Server: ${error}\n`);
     process.exit(1);
   }
 }
 
 // Catch unhandled exceptions and process termination
 process.on('uncaughtException', (error) => {
-  console.error('Uncaught Exception:', error);
+  // Use stderr to avoid interfering with MCP JSON-RPC on stdout
+  process.stderr.write(`Uncaught Exception: ${error}\n`);
   process.exit(1);
 });
 
 process.on('unhandledRejection', (reason, promise) => {
-  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  // Use stderr to avoid interfering with MCP JSON-RPC on stdout  
+  process.stderr.write(`Unhandled Rejection at: ${promise}, reason: ${reason}\n`);
   process.exit(1);
 });
 
 // Start server
 main().catch((error) => {
-  console.error('Failed to start server:', error);
+  // Use stderr to avoid interfering with MCP JSON-RPC on stdout
+  process.stderr.write(`Failed to start server: ${error}\n`);
   process.exit(1);
 });

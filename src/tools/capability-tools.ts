@@ -12,14 +12,14 @@ interface Tool {
     required?: string[];
   };
 }
-import { OmiseClient } from '../utils/omise-client';
-import { Logger } from '../utils/logger';
-import type { ToolResult } from '../types/mcp';
+import { OmiseClient } from '../utils/omise-client.js';
+import { Logger } from '../utils/logger.js';
+import type { ToolResult } from '../types/mcp.js';
 import type { 
   OmiseCapability,
   OmisePaymentMethod,
   OmiseCurrency
-} from '../types/omise';
+} from '../types/omise.js';
 
 export class CapabilityTools {
   private omiseClient: OmiseClient;
